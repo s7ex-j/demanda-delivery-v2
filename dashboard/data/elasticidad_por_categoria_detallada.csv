@@ -1,0 +1,15 @@
+category,elasticidad,recomendacion,especificacion
+Fish,-2.4883,BAJAR,interaccion precio x categoria
+Seafood,-2.4797,BAJAR,interaccion precio x categoria
+Soup,-2.211,BAJAR,interaccion precio x categoria
+Pizza,-1.9537,BAJAR,interaccion precio x categoria
+Sandwich,-1.7592,BAJAR,interaccion precio x categoria
+Starters,-1.4335,BAJAR,interaccion precio x categoria
+Biryani,-1.1312,BAJAR,interaccion precio x categoria
+Rice Bowl,-1.0913,MANTENER,interaccion precio x categoria
+Desert,-0.9037,MANTENER,interaccion precio x categoria
+Beverages,-0.6949,SUBIR,interaccion precio x categoria
+Other Snacks,-0.6682,SUBIR,interaccion precio x categoria
+Extras,-0.6029,SUBIR,interaccion precio x categoria
+Salad,-0.3381,SUBIR,interaccion precio x categoria
+Pasta,-0.2783,SUBIR,interaccion precio x categoria
