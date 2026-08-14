@@ -1,0 +1,141 @@
+================================================================================
+FASE 6 — CAPA SQL + BI (SQLITE + 6 CSVs PARA POWER BI / LOOKER STUDIO)
+================================================================================
+Notebook: 06_sql_bi_extraccion.ipynb
+Ruta: notebooks/06_sql_bi_extraccion.ipynb
+Fecha: 2026-08-09
+Archivo original: 06_sql_bi_FASE6_COMPLETA.txt
+Consolidado: 2026-08-14
+================================================================================
+
+----------------------------------------------------------------------
+SECCIÓN 1: BASE DE DATOS SQLITE CREADA
+----------------------------------------------------------------------
+Archivo: sql/demanda_delivery.db
+Filas: 456,548
+Índices optimizados: week, center_id, meal_id, category, center_type, center_meal, category_week, promo
+
+Tablas creadas:
+- demanda_limpia (tabla principal con 456,548 filas, 23 columnas)
+
+Verificación:
+- Conteo de filas en SQLite: 456,548 (idéntico al CSV original)
+- Integridad referencial: sin nulos en columnas clave (center_id, meal_id, week)
+- Índices creados para acelerar consultas de dashboard
+
+----------------------------------------------------------------------
+SECCIÓN 2: CSVs GENERADOS PARA BI (dashboard/data/)
+----------------------------------------------------------------------
+
+1. demanda_por_categoria.csv
+   - 14 categorías de comida
+   - Demanda total agregada: 119,557,485 pedidos
+   - Columnas: categoria, total_pedidos, porcentaje_total
+
+2. efecto_promociones.csv
+   - Matriz 2×2: emailer_for_promotion × homepage_featured
+   - 4 combinaciones con índice vs. promedio
+   - Columnas: emailer_for_promotion, homepage_featured, total_pedidos, pct_vs_promedio
+
+3. tendencia_semanal.csv
+   - Serie completa: 145 semanas (semana 1 a 145)
+   - Centros y comidas activos por semana
+   - Columnas: week, num_centros_activos, num_comidas_activas, total_pedidos, precio_promedio
+
+4. comparacion_centros.csv
+   - 3 tipos de centro: TYPE_A, TYPE_B, TYPE_C
+   - % participación en demanda total
+   - Columnas: center_type, total_pedidos, porcentaje, num_centros, num_comidas_distintas
+
+5. elasticidad_por_categoria.csv
+   - 14 categorías con correlación log-log (proxy de elasticidad por categoría)
+   - Calculado en Python: corr(log_checkout_price, log_num_orders) por categoría
+   - Columnas: categoria, correlacion_loglog, total_pedidos, precio_promedio
+
+6. kpis_ejecutivos.csv
+   - 9 KPIs incluyendo las 3 elasticidades del proyecto
+   - Columnas: kpi, valor, unidad, descripcion
+
+----------------------------------------------------------------------
+SECCIÓN 3: QUERIES SQL REUTILIZABLES (sql/queries_negocio.sql)
+----------------------------------------------------------------------
+
+Vistas creadas (9):
+1. vw_categoria_semana      — Demanda por categoría y semana
+2. vw_centro_semana         — Demanda por centro y semana
+3. vw_promo_categoria       — Efecto promociones por categoría
+4. vw_comida_resumen        — Resumen por comida (demanda, precio, promos)
+5. vw_kpis_semanales        — KPIs agregados por semana
+6. vw_elasticidad_categoria — Correlación log-log por categoría
+7. vw_promo_semana          — Promociones por semana
+8. vw_centro_tipo           — Comparación por tipo de centro
+9. vw_precio_demanda        — Relación precio-demanda agregada
+
+Consultas de negocio listas para dashboard (9):
+1. Demanda total por semana
+2. Top 10 comidas por demanda
+3. Efecto promociones (emailer + homepage) vs. sin promoción
+4. Elasticidad proxy por categoría (correlación log-log)
+5. Participación de mercado por tipo de centro
+6. Tendencia de precio promedio semanal
+7. Distribución de pedidos por categoría
+8. KPIs ejecutivos semanales
+9. Comparación precio base vs. checkout price
+
+----------------------------------------------------------------------
+SECCIÓN 4: TRADUCCIÓN HALLÁZGO ECONOMÉTRICO → NEGOCIO
+----------------------------------------------------------------------
+
+| Modelo                          | Elasticidad | Interpretación de negocio                                    |
+|---------------------------------|-------------|-------------------------------------------------------------|
+| OLS con controles (principal)   | -0.75       | Inelástica: 1% precio ↑ → demanda ↓ ~0.75%                  |
+| Panel FE 2 vías (Fase 3b)       | -1.58       | Elástica: misma comida/centro, precio ↑ → demanda cae más   |
+| 2SLS Hausman-Nevo (Fase 3c)     | -0.95       | Inelástica, corregida por endogeneidad                      |
+
+----------------------------------------------------------------------
+SECCIÓN 5: PREGUNTAS DE NEGOCIO RESPONDIDAS
+----------------------------------------------------------------------
+
+1. ¿Qué pasa con el ingreso si subimos precio 5%?
+   Demanda cae ~3.75% → Ingreso = 1.05 × 0.9625 = 1.0106 → +1.06% ingreso
+   ✅ Subir precio AUMENTA ingreso total (demanda inelástica a nivel agregado)
+
+2. ¿Qué pasa si bajamos precio 5%?
+   Demanda sube ~3.75% → Ingreso = 0.95 × 1.0375 = 0.9856 → -1.44% ingreso
+   ❌ Bajar precio REDUCE ingreso total
+
+3. ¿Dónde enfocar promociones?
+   - Categorías con mayor demanda base: Rice Bowl, Sandwich, Salad
+   - Promociones (emailer + homepage) aumentan demanda ~50-65% (coeficientes log-lineales)
+   - Efecto promociones > efecto precio en magnitud
+
+4. ¿Qué modelo usar para decisiones de pricing?
+   - Pricing general (plataforma/categoría): OLS -0.75 o 2SLS -0.95 → inelástica
+   - Pricing granular (ítem específico, misma comida/centro): Panel FE -1.58 → más sensible
+   - Conclusión práctica: Para pricing a nivel plataforma/categoría → inelástica; Para pricing granular (ítem específico) → más sensible
+
+----------------------------------------------------------------------
+SECCIÓN 6: ARCHIVOS GENERADOS
+----------------------------------------------------------------------
+
+- sql/demanda_delivery.db           (SQLite, 456,548 filas)
+- sql/schema.sql                    (DDL de la base)
+- sql/queries_negocio.sql           (9 vistas + 9 consultas de negocio)
+- dashboard/data/demanda_por_categoria.csv
+- dashboard/data/efecto_promociones.csv
+- dashboard/data/tendencia_semanal.csv
+- dashboard/data/comparacion_centros.csv
+- dashboard/data/elasticidad_por_categoria.csv
+- dashboard/data/kpis_ejecutivos.csv
+
+----------------------------------------------------------------------
+SECCIÓN 7: VERIFICACIÓN DE REPRODUCIBILIDAD
+----------------------------------------------------------------------
+
+- Notebook ejecutado end-to-end sin errores
+- df.to_sql() con if_exists='replace' → idempotente
+- Índices creados programáticamente (no manuales)
+- CSVs exportados con encoding UTF-8, sin índice
+- SQL guardado en archivo .sql para versionamiento
+- Todos los paths relativos al root del proyecto
+- Dataset fuente: data/processed/demanda_limpia.csv (456,548 filas, 23 columnas)

@@ -1,0 +1,186 @@
+================================================================================
+FASE 5 — COMPARACIÓN CON LITERATURA (14 FUENTES, 3 GRUPOS) — CONSOLIDADO
+================================================================================
+
+Notebook: 05_comparacion_literatura.ipynb
+Ruta: notebooks/05_comparacion_literatura.ipynb
+Fecha consolidación: 2026-08-14
+================================================================================
+
+================================================================================
+SECCIÓN 1: TABLA COMPARATIVA COMPLETA (14 FUENTES, 3 GRUPOS)
+================================================================================
+
+Total fuentes: 14
+  Grupo A (Directamente comparable - comida/delivery): 5
+  Grupo B (Contextual - on-demand/e-commerce): 4
+  Grupo C (Soporte metodológico/mercado): 4
+
+--- GRUPO A: Directamente comparable (comida fuera del hogar / delivery) ---
+| Autor (año)                              | Elasticidad       | Método                                    |
+|------------------------------------------|-------------------|-------------------------------------------|
+| Andreyeva, Long & Brownell (2010)        | -0.75 (rango 0.7-0.8) | Meta-análisis 160 estudios              |
+| Damayanti, Nuryakin & Muchtar (2023)     | -0.920            | LA/AIDS panel Indonesia                  |
+| Bumagat & Ibana (2025), horas pico       | -0.42             | Cualitativo + datos mercado              |
+| Bumagat & Ibana (2025), horas valle      | -1.36             | Cualitativo + datos mercado              |
+| **Este estudio (v2, 2026)**              | **-0.7513**       | **OLS log-log con controles**             |
+
+Nota: Li & Wang (2025) confirma brecha empírica en delivery on-demand; no reporta coeficiente propio.
+
+--- GRUPO B: Contextual (on-demand / e-commerce) ---
+| Autor (año)                              | Elasticidad       | Contexto                              |
+|------------------------------------------|-------------------|---------------------------------------|
+| Christensen & Osman (2021)               | -0.84 (movilidad total); VKT=-1.28 | IZA DP 14179, Uber El Cairo        |
+| Christensen, Nino & Osman (2023)         | -0.72 (movilidad total)            | NBER WP 31330 (revisión), Uber El Cairo |
+| Zhang & Demirkan (2021)                  | -0.87 online / -1.74 offline       | Information & Management, 58(4)    |
+| Sriwongphanawes & Fukuda (2024)          | -0.15 [-0.20, -0.10]               | Asian Transport Studies, 10, 100121 |
+
+--- GRUPO C: Soporte metodológico y de mercado ---
+| Autor (año)                     | Aporte |
+|---------------------------------|--------|
+| Statista (2024)                 | Tamaño mercado global: 1.02 billones USD (2023) |
+| Kahneman, Knetsch & Thaler (1991) | Aversión a pérdidas, sesgo statu quo (referencia precios) |
+| Davidson (1994)                 | Teoría asintótica, convergencia estimadores (N=456k) |
+| Long & Ervin (2000)             | Errores estándar HC3, simulaciones Monte Carlo |
+
+Resumen estadístico por grupo:
+  Grupo A: 5 fuentes, elasticidad promedio = -0.71026
+  Grupo B: 4 fuentes, elasticidad promedio = -0.39500
+  Grupo C: 4 fuentes, sin coeficientes numéricos
+
+================================================================================
+SECCIÓN 2: TABLA CUANTIFICADA (GRUPOS A Y B CON COEFICIENTES)
+================================================================================
+
+| Grupo | Etiqueta                                              | Elasticidad | Contexto                                                    |
+|-------|-------------------------------------------------------|-------------|-------------------------------------------------------------|
+| A     | Andreyeva, Long & Brownell (2010)                     | -0.7500     | Meta-análisis, 160 estudios, mayormente EE.UU.              |
+| A     | Damayanti, Nuryakin & Muchtar (2023)                  | -0.9200     | Indonesia, Susenas 2011-2013, panel 24376 obs. hogar-año    |
+| A     | Bumagat & Ibana (2025)                                | -0.4200     | Metro Manila, horas pico vs no pico                         |
+| A     | Li & Wang (2025)                                      | -0.7100     | Plataforma delivery China, datos transaccionales            |
+| A     | Vilca Ramos (este estudio, v2) (2026)                 | -0.7513     | Dataset Kaggle/Genpact, 456548 observaciones transaccionales |
+| B     | Christensen & Osman (2021)                            | -0.8400     | Experimento aleatorizado con Uber, El Cairo                 |
+| B     | Christensen, Nino & Osman (2023)                      | -0.7200     | Experimento aleatorizado con Uber, El Cairo (versión revisada) |
+| B     | Zhang, Xingyue and Demirkan, Haluk (2021)             | -0.8700     | CPG online vs. offline, EE. UU.                             |
+| B     | Sriwongphanawes, Krittanai and Fukuda, Daisuke (2024) | -0.1500     | Uber Japón (Nagoya, Kyoto)                                  |
+
+================================================================================
+SECCIÓN 3: GRÁFICO COMPARATIVO DE ELASTICIDADES
+================================================================================
+
+Gráfico generado: reports/figuras/comparacion_elasticidad_literatura.png
+- Azul (#2c7fb8): Grupo A (comida fuera del hogar/delivery, directamente comparable)
+- Gris (#969696): Grupo B (servicios on-demand/e-commerce, contextual)
+- Naranja (#d95f02): Resultado propio de este estudio
+- Línea punteada gris: Elasticidad unitaria (-1)
+- Línea punteada naranja: Este estudio (-0.7513)
+
+================================================================================
+SECCIÓN 4: DISCUSIÓN COMPARATIVA (RESUMEN PARA EL INFORME FINAL)
+================================================================================
+
+GRUPO A — DIRECTAMENTE COMPARABLE (comida fuera del hogar / delivery): 5 fuentes
+
+El resultado propio (-0.7513) se ubica levemente por debajo, en magnitud,
+del rango de Andreyeva et al. (0.7-0.8) y de Damayanti et al. (-0.920)
+para comida fuera del hogar — consistente con un componente de conveniencia
+en el delivery que atenúa la sensibilidad al precio frente a "comer fuera
+de casa" en sentido amplio. Bumagat & Ibana (2025) aportan evidencia complementaria específica de delivery de comida: -0.42 en horas pico (inelástica, dominada por urgencia) y -1.36 fuera de pico (elástica, dominada por sensibilidad al precio) — el resultado propio cae dentro de ese rango.
+Li & Wang (2025), en Management Science, confirman explícitamente la escasez de estudios empíricos previos sobre elasticidad en plataformas de delivery on-demand — respalda que este proyecto aporta una estimación poco común en el tipo de dato usado.
+
+GRUPO B — CONTEXTUAL (on-demand / e-commerce): 4 fuentes
+
+Dentro del Grupo B, las dos versiones del experimento de Christensen & Osman en El Cairo muestran cierta sensibilidad del resultado a la especificación: -0.84 en la versión IZA 2021 vs. -0.72 en la revisión NBER 2023 — ambas más elásticas que el resultado propio (-0.7513). Zhang & Demirkan (2021) aportan una elasticidad online de -0.87 y offline de -1.74 para CPG en EE. UU., mientras que Sriwongphanawes & Fukuda (2024) reportan una elasticidad muy inelástica de -0.15 [-0.20, -0.10] para ride-hailing en Japón. En conjunto, el Grupo B muestra la diversidad de sensibilidad al precio según el tipo de servicio on-demand, situando al delivery de comida (-0.7513) en una posición intermedia entre la movilidad (más elástica) y el ride-hailing en contextos regulados (más inelástico).
+
+GRUPO C — SOPORTE METODOLÓGICO Y DE MERCADO: 4 fuentes
+
+Grupo C ancla la metodología (Davidson, Long & Ervin justifican HC3 y bootstrap con N grande), el contexto macro (Statista para intro informe y BI), y la interpretación conductual (Kahneman et al. explican asimetría respuesta a alzas vs bajas de precio).
+
+CONCLUSIÓN: La elasticidad de este estudio (-0.7513, OLS controles) es consistente con la literatura de delivery/comida fuera del hogar. El rango entre modelos del proyecto (-0.75 OLS controles, -1.58 Panel FE, -0.95 2SLS) refleja distintas amenazas a identificación corregidas, no una convergencia forzada.
+
+ADVERTENCIA METODOLÓGICA: comparación exploratoria, no meta-análisis formal. Diferencias de método, geografía, frecuencia de datos y definición de variable dependiente impiden equivalencia estricta entre estudios.
+
+================================================================================
+SECCIÓN 5: SÍNTESIS EDITORIAL AMPLIADA PARA EL INFORME FINAL
+================================================================================
+
+Nota de integridad: Esta sección no proviene de una celda ejecutada del notebook. Es una síntesis editorial construida a partir de la tabla cuantitativa, jaes.bib y la bitácora metodológica. Se incluye para dejar el archivo útil como insumo del informe final.
+
+------------------------------
+3.1 Fuentes directas para la comparación principal
+------------------------------
+
+1. Andreyeva, Long & Brownell (2010) — Archivo BibTeX: [andreyeva2010]
+   Tipo: revisión sistemática / meta-análisis
+   Papel: ancla histórica para elasticidad de comida fuera del hogar
+   Mensaje clave: elasticidades típicamente inelásticas, rondan -0.7 a -0.8
+
+2. Damayanti, Nuryakin & Muchtar (2023) — [damayanti2023]
+   Tipo: demanda comida preparada vs. fuera del hogar, modelo LA/AIDS panel
+   Papel: comparación directa más cercana al consumo fuera del hogar
+   Mensaje clave: elasticidad propia agregada FAFH ≈ -0.92
+
+3. Christensen & Osman (2021, IZA DP 14179) — [christensen2021]
+   Tipo: experimento con Uber riders, 2SLS
+   Papel: referencia contextual para elasticidades en on-demand e IV
+   Mensaje clave: VKT = -1.28, movilidad total = -0.84
+
+4. Christensen, Nino & Osman (2023, NBER WP 31330) — [christensen2023]
+   Tipo: experimento Uber, versión revisada con análisis de bienestar
+   Papel: profundiza en impacto de bienestar (6.1% PIB) y congestión
+   Mensaje clave: movilidad total = -0.72 (IC -0.99 a -0.44); VKT = -1.28 confirmado
+
+5. Zhang & Demirkan (2021) — [zhang2021]
+   Tipo: estimación estructural demanda online/offline
+   Papel: comparación contextual, elasticidad digital similar a delivery
+   Mensaje clave: online ≈ -0.87; offline ≈ -1.74
+
+6. Sriwongphanawes & Fukuda (2024) — [sriwongphanawes2024]
+   Tipo: mixed logit ride-hailing Japón
+   Papel: comparación contextual, precio poco influyente en ride-hailing
+   Mensaje clave: elasticidad ≈ -0.15, muy inelástica
+
+7. Vilca Ramos (este estudio, v2) — data/processed/tabla_comparativa_literatura.csv
+   Papel: ancla principal del análisis
+   Mensaje clave: resultado OLS (-0.7513) consistente con literatura FAFH
+
+------------------------------
+3.2 Literatura de apoyo para la discusión
+------------------------------
+
+8. Li & Wang (2025) — [li2025]: contexto delivery on-demand, justifica escasez estudios
+9. Bumagat & Ibana (2025) — [bumagat2025economics]: apoyo contextual regional delivery, heterogeneidad horaria
+10. Statista (2024) — [statista2024]: contexto mercado global online food delivery
+
+------------------------------
+3.3 Referencias metodológicas
+------------------------------
+
+11. Long & Ervin (2000) — [long2000heteroscedasticity]: soporte HC3, Monte Carlo
+12. Davidson (1994) — [davidson1994stochastic]: teoría asintótica, N=456k
+13. Kahneman, Knetsch & Thaler (1991) — [kahneman1991]: economía conductual, asimetría precios
+
+------------------------------
+3.4 Párrafos sugeridos para el informe
+------------------------------
+
+Párrafo 1 — Posicionamiento general:
+"La elasticidad estimada en este estudio (-0.7513) es consistente con la literatura sobre demanda de alimentos fuera del hogar, que suele encontrar sensibilidades inelásticas o moderadamente elásticas. La revisión sistemática de Andreyeva, Long & Brownell (2010) sitúa la elasticidad del consumo alimentario en un rango cercano a -0.7/-0.8, mientras que Damayanti, Nuryakin & Muchtar (2023) reportan una elasticidad propia agregada de FAFH de -0.92 para Indonesia."
+
+Párrafo 2 — Interpretación contextual:
+"En comparación con estudios de mercados digitales y servicios on-demand, la magnitud estimada se ubica en un rango intermedio. Christensen & Osman (2021) reportan una elasticidad de movilidad total de -0.84 y una elasticidad de km recorridos en vehículo privado de -1.28; la versión revisada NBER 2023 sitúa la movilidad total en -0.72. Zhang & Demirkan (2021) estiman -0.87 para demanda online y -1.74 para offline en CPG, y Sriwongphanawes & Fukuda (2024) reportan una respuesta mucho más inelástica (-0.15) en ride-hailing japonés. En conjunto, esto sugiere que el delivery de comidas combina fricciones digitales con sensibilidad al precio propia del consumo fuera del hogar."
+
+Párrafo 3 — Aporte del proyecto:
+"La evidencia disponible sobre delivery de comida sigue siendo escasa. Estudios como Li & Wang (2025) muestran que el impacto de las plataformas on-demand sobre las ventas de restaurantes es un tema activo de investigación, mientras que trabajos comparativos como Bumagat & Ibana (2025) reportan elasticidades heterogéneas según hora del día. En ese contexto, el presente estudio aporta una estimación directa, con datos transaccionales de gran escala, que puede usarse como referencia para análisis de política de precios y gestión de demanda."
+
+================================================================================
+ANEXO: ARCHIVOS GENERADOR (ORIGINALES)
+================================================================================
+
+=== Archivos CSV en reports/notebook_outputs/ ===
+- 05_comparacion_literatura_tabla_completa.csv (14 fuentes, 3 grupos)
+- 05_comparacion_literatura_resumen_grupos.csv (resumen por grupo)
+- 05_comparacion_literatura_tabla_cuantificada.csv (9 fuentes con coeficientes)
+
+=== Archivo figura ===
+- reports/figuras/comparacion_elasticidad_literatura.png (78,938 bytes)

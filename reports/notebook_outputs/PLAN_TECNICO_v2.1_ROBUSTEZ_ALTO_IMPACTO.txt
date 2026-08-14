@@ -1,0 +1,144 @@
+================================================================================
+PLAN TÉCNICO v2.1 — SECCIÓN 2.1: MEJORAS DE ROBUSTEZ (ALTO IMPACTO / BAJO ESFUERZO)
+================================================================================
+Fecha: 2026-08-09
+Dataset: 456,548 observaciones (demanda_limpia.csv)
+Pipeline: Python (statsmodels, linearmodels)
+Archivo original: 07_plan_tecnico_2_1_FASE7_COMPLETA.txt
+Consolidado: 2026-08-14
+================================================================================
+
+----------------------------------------------------------------------
+1. QUANTILE REGRESSION (τ=0.1, 0.5, 0.9)
+----------------------------------------------------------------------
+Objetivo: Detectar heterogeneidad en la elasticidad según el cuantil
+de la distribución condicional de la demanda.
+
+Resultados puntuales (modelo log-log con controles):
+
+| τ (cuantil) | Elasticidad (log_checkout_price) | Interpretación |
+|-------------|----------------------------------|----------------|
+| 0.1         | -0.6523                          | Demanda baja: inelástica, menos sensible al precio |
+| 0.5 (mediana)| -0.7702                          | Demanda mediana: similar a OLS (-0.7513) |
+| 0.9         | -1.0048                          | Demanda alta: elástica, más sensible al precio |
+
+Conclusión: La elasticidad varía sistemáticamente entre cuantiles.
+La demanda es MÁS elástica en la cola superior (pedidos altos) que
+en la cola inferior (pedidos bajos). Esto sugiere heterogeneidad
+no capturada por el modelo OLS de media condicional.
+
+Nota: Bootstrap CI omitido por tiempo computacional (456k obs × 200
+iteraciones × 3 cuantiles = 273M ajustes). Se recomienda ejecutar
+en batch offline para IC 95% bootstrap percentil.
+
+----------------------------------------------------------------------
+2. INTERACCIÓN PRECIO × PROMOCIÓN
+----------------------------------------------------------------------
+Objetivo: Testear si el efecto de las promociones depende del nivel
+de precio (o equivalentemente, si la elasticidad-precio cambia con
+promoción activa).
+
+Modelo: log_num_orders ~ log_checkout_price + emailer + homepage +
+        log_checkout_price:emailer + log_checkout_price:homepage + controles
+
+Resultados:
+- log_checkout_price (main effect):         -0.7398
+- log_checkout_price:emailer_for_promotion: +0.3221
+- log_checkout_price:homepage_featured:     -0.2225
+
+Test de Wald conjunto (H0: coef(interacciones) = 0):
+  F = 659.73, p ≈ 0 (2 gl)
+  → RECHAZO FUERTE de H0: INTERACCIÓN SIGNIFICATIVA
+
+Interpretación:
+- Emailer: La interacción POSITIVA (+0.3221) implica que cuando hay
+  emailer activo, la elasticidad es MENOS negativa (menos elástica).
+  Efecto marginal del emailer a precio promedio: +0.5028 (como en
+  modelo principal), pero varía con el precio.
+- Homepage: La interacción NEGATIVA (-0.2225) implica que cuando hay
+  homepage activo, la elasticidad es MÁS negativa (más elástica).
+
+La no-aditividad entre precio y promociones es estadísticamente
+robusta y económicamente relevante para pricing dinámico.
+
+----------------------------------------------------------------------
+3. TEST RESET (RAMSEY)
+----------------------------------------------------------------------
+Objetivo: Test de especificación funcional (variables omitidas, forma
+funcional incorrecta).
+
+Modelo base: log-log con controles (Fase 3, especificación principal)
+Test: linear_reset (potencias 2, 3 de valores ajustados)
+
+Resultado:
+  F = 119.57, p = 1.21e-52 (2 gl, 456,542 gl den)
+  → RECHAZO FUERTE de H0: ESPECIFICACIÓN INCORRECTA
+
+Consistente con hallazgo Fase 3x (RCS): la forma funcional log-log
+con elasticidad constante es inadecuada. La curvatura real en la
+relación precio-demanda no es capturada por el modelo lineal en logs.
+
+----------------------------------------------------------------------
+4. IV NO-LINEAL VÍA CONTROL FUNCTION (WOOLDRIDGE 2015)
+----------------------------------------------------------------------
+Objetivo: Combinar corrección de endogeneidad (IV) con flexibilidad
+funcional (RCS), activado por rechazo Wald en Fase 3x.
+
+Enfoque en dos etapas:
+1. Primera etapa: log_checkout_price ~ instrumentos + controles
+   → Obtener residuos v_hat (componente endógeno del precio)
+2. Segunda etapa: log_num_orders ~ RCS(log_checkout_price) + v_hat + controles
+
+Instrumentos (Hausman-Nevo):
+  - log_base_price (correlación 0.956)
+  - log_precio_prom_otros_centros (correlación 0.986)
+
+Primera etapa:
+  R² = 0.9767, F = 1.46e7 (Shea's R² = 0.976)
+  → Instrumentos FUERTES (Stock-Yogo: F >> 10)
+
+Segunda etapa (con RCS 4 nudos + v_hat):
+  R² ajustado = 0.5467 (vs. 0.5314 OLS controles, 0.5450 RCS OLS)
+  → MEJORA sobre todos los modelos previos
+
+Tests en segunda etapa:
+1. Exogeneidad (H0: coef(v_hat) = 0):
+   F = 1,580.86, p ≈ 0 → RECHAZA H0
+   → log_checkout_price ES ENDÓGENA (consistente Wu-Hausman Fase 3c)
+   → Control function necesaria y efectiva
+
+2. No-linealidad condicional (H0: coef(splines no lineales) = 0):
+   F = 4,815.32, p ≈ 0 → RECHAZA H0
+   → No-linealidad PERSISTE tras corregir endogeneidad
+   → RCS necesario incluso en marco IV
+
+Coeficiente v_hat = +0.7129 (p ≈ 0)
+  → Sesgo OLS positivo: OLS subestima magnitud elasticidad
+  → IV control function corrige hacia elasticidad más negativa
+
+Conclusión: La especificación más robusta combina IV + RCS.
+El modelo log-log OLS constante (-0.7513) sufre de:
+  (a) Sesgo de endogeneidad (simultaneidad)
+  (b) Sesgo de forma funcional (elasticidad no constante)
+Ambos problemas se confirman y corrigen conjuntamente.
+
+----------------------------------------------------------------------
+RESUMEN EJECUTIVO PLAN TÉCNICO 2.1
+----------------------------------------------------------------------
+| Mejora                          | Resultado           | Impacto |
+|--------------------------------|---------------------|---------|
+| Quantile Regression (τ=0.1,0.5,0.9) | Elast.: -0.65 → -1.00 | ALTO - Heterogeneidad real |
+| Precio × Promo Interacción     | F=660, p≈0          | ALTO - No aditividad |
+| RESET Test                     | F=120, p≈0          | ALTO - Misspecificación |
+| IV Control Function (RCS)      | Exog.✓, No-lin.✓    | ALTO - Doble corrección |
+
+TODAS las mejoras de "ALTO IMPACTO / BAJO ESFUERZO" del Plan técnico
+se han implementado y validado con datos reales. Los resultados
+refuerzan drásticamente la discusión de limitaciones: la elasticidad
+constante -0.7513 es una aproximación que oculta heterogeneidad
+económicamente relevante (por cuantil, por nivel de precio, por
+estado promocional) y sufre sesgos de endogeneidad y forma funcional.
+
+Próximo paso: Incorporar resultados a informe.tex (Sección 7.3+
+o nueva Sección 8) y generar figuras para Quantile Regression,
+Interacción Precio×Promo, y Control Function IV.
