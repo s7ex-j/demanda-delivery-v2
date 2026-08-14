@@ -1,0 +1,1205 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{apa/apasortcite//global/global/global}
+    \entry{andreyeva2010}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=13448d2b549cd8ce4382f666476aaf4b}{%
+           family={Andreyeva},
+           familyi={A\bibinitperiod},
+           given={Tatiana},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e8daca12640b36cbcd1bad9f3c71f5f2}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Michael\bibnamedelima W.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=682d4a5f0737b22ef501f5b9e469bc1b}{%
+           family={Brownell},
+           familyi={B\bibinitperiod},
+           given={Kelly\bibnamedelima D.},
+           giveni={K\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a6890841c73c2d01469fc2063e0571d8}
+      \strng{fullhash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{fullhashraw}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{bibnamehash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authorbibnamehash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authornamehash}{a6890841c73c2d01469fc2063e0571d8}
+      \strng{authorfullhash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authorfullhashraw}{18c2965a4f3a21581db3b18603ed0ead}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Journal of Public Health}
+      \field{number}{2}
+      \field{title}{The Impact of Food Prices on Consumption: A Systematic Review of Research on the Price Elasticity of Demand for Food}
+      \field{volume}{100}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{pages}{216\bibrangedash 222}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.2105/AJPH.2008.151415
+      \endverb
+    \endentry
+    \entry{bumagat2025economics}{misc}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=0a01018073a5d0855ceb8c9af4aebfe6}{%
+           family={Bumagat},
+           familyi={B\bibinitperiod},
+           given={Joshua\bibnamedelima Laurence},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=02f3613b0e3925431b7c90530f4504d9}{%
+           family={Ibana},
+           familyi={I\bibinitperiod},
+           given={Emir},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{fullhash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{fullhashraw}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{bibnamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorbibnamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authornamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorfullhash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorfullhashraw}{b0f6236dbd01d6d50e46ac8091406bda}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{ResearchGate Educational Repository}
+      \field{month}{10}
+      \field{title}{ECONOMICS FOR MANAGERS: Price Elasticity of Demand for Online Food Delivery Services: A Comparative Analysis of Peak and Off-Peak Hours in Metro Manila}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://researchgate.net
+      \endverb
+      \verb{url}
+      \verb https://researchgate.net
+      \endverb
+    \endentry
+    \entry{christensen2021}{report}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=0085ec5a35b8b08432551a488825d4dd}{%
+           family={Christensen},
+           familyi={C\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c41e6acb7818e69ac909ffd170cc3289}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {IZA Institute of Labor Economics}%
+      }
+      \strng{namehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{fullhash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{fullhashraw}{9d1eb081bf32407d391c98de410045e7}
+      \strng{bibnamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorbibnamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authornamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorfullhash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorfullhashraw}{9d1eb081bf32407d391c98de410045e7}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{14179}
+      \field{title}{The Demand for Mobility: Evidence from an Experiment with Uber Riders}
+      \field{type}{IZA Discussion Paper}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://www.iza.org/publications/dp/14179/
+      \endverb
+      \verb{url}
+      \verb https://www.iza.org/publications/dp/14179/
+      \endverb
+    \endentry
+    \entry{christensen2023}{report}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=0085ec5a35b8b08432551a488825d4dd}{%
+           family={Christensen},
+           familyi={C\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a95a52c45a829dedd5cedc25879fbf5d}{%
+           family={Nino},
+           familyi={N\bibinitperiod},
+           given={Gustavo},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c41e6acb7818e69ac909ffd170cc3289}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {National Bureau of Economic Research}%
+      }
+      \strng{namehash}{74b01bdd42cfd8757f11568b116442f3}
+      \strng{fullhash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{fullhashraw}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{bibnamehash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authorbibnamehash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authornamehash}{74b01bdd42cfd8757f11568b116442f3}
+      \strng{authorfullhash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authorfullhashraw}{fc5601d3dc9d730814f4f19e97fa793e}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{number}{31330}
+      \field{series}{Working Paper Series}
+      \field{title}{The Demand for Mobility: Evidence from an Experiment with Uber Riders}
+      \field{type}{Working Paper}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.3386/w31330
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nber.org/papers/w31330
+      \endverb
+      \verb{url}
+      \verb http://www.nber.org/papers/w31330
+      \endverb
+    \endentry
+    \entry{damayanti2023}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=fb953f6bfc12fdad688a1c4fbf7a9b03}{%
+           family={Damayanti},
+           familyi={D\bibinitperiod},
+           given={Ratih},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dea45abc8de5748603dbb5de8b996128}{%
+           family={Nuryakin},
+           familyi={N\bibinitperiod},
+           given={Chaikal},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=059e02442d06429062f848a1ccd1db78}{%
+           family={Muchtar},
+           familyi={M\bibinitperiod},
+           given={Pyan\bibnamedelima Amin},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{129e92fca535306143625b6b8fd4dc95}
+      \strng{fullhash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{fullhashraw}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{bibnamehash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authorbibnamehash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authornamehash}{129e92fca535306143625b6b8fd4dc95}
+      \strng{authorfullhash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authorfullhashraw}{a81b2d1efaa7960df1425096b5fd3611}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Economics and Finance in Indonesia}
+      \field{number}{1}
+      \field{title}{Household Demand for Food Prepared at Home and Food Away from Home in Indonesia}
+      \field{volume}{69}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{35\bibrangedash 46}
+      \range{pages}{12}
+      \verb{urlraw}
+      \verb https://scholarhub.ui.ac.id/efi/vol69/iss1/3/
+      \endverb
+      \verb{url}
+      \verb https://scholarhub.ui.ac.id/efi/vol69/iss1/3/
+      \endverb
+    \endentry
+    \entry{davidson1994stochastic}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=067f1e3d219657d2c89fbaa1325dbfab}{%
+           family={Davidson},
+           familyi={D\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford University Press}%
+      }
+      \strng{namehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{fullhash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{fullhashraw}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{bibnamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorbibnamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authornamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorfullhash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorfullhashraw}{067f1e3d219657d2c89fbaa1325dbfab}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780198774037}
+      \field{month}{10}
+      \field{title}{Stochastic Limit Theory: An Introduction for Econometricians}
+      \field{year}{1994}
+      \verb{doi}
+      \verb 10.1093/0198774036.001.0001
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/0198774036.001.0001
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/0198774036.001.0001
+      \endverb
+    \endentry
+    \entry{kaggle_food_demand}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b370c3fada8e237ee0259c6ae1d71796}{%
+           family={{Genpact / Analytics Vidhya}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{fullhash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{fullhashraw}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{bibnamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorbibnamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authornamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorfullhash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorfullhashraw}{b370c3fada8e237ee0259c6ae1d71796}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Food Demand Forecasting}
+      \field{urlday}{1}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.kaggle.com/datasets/kannanaikkal/food-demand-forecasting
+      \endverb
+      \verb{url}
+      \verb https://www.kaggle.com/datasets/kannanaikkal/food-demand-forecasting
+      \endverb
+    \endentry
+    \entry{kahneman1991}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d0dcea81f8587e7d56bb5dbe34a39d6c}{%
+           family={Kahneman},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5f90496623bb691c5c893f5d36073b1b}{%
+           family={Knetsch},
+           familyi={K\bibinitperiod},
+           given={Jack\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b968bbcc6d4f6baf47e9fbac4012621e}{%
+           family={Thaler},
+           familyi={T\bibinitperiod},
+           given={Richard\bibnamedelima H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fda2d383a773a3b6271dea8baf8c82dd}
+      \strng{fullhash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{fullhashraw}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{bibnamehash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authorbibnamehash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authornamehash}{fda2d383a773a3b6271dea8baf8c82dd}
+      \strng{authorfullhash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authorfullhashraw}{4a2c7e216ab4d58fbdfd426042538924}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Economic Perspectives}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Anomalies: The Endowment Effect, Loss Aversion, and Status Quo Bias}
+      \field{volume}{5}
+      \field{year}{1991}
+      \field{pages}{193\bibrangedash 206}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1257/jep.5.1.193
+      \endverb
+      \verb{urlraw}
+      \verb https://www.aeaweb.org/articles?id=10.1257/jep.5.1.193
+      \endverb
+      \verb{url}
+      \verb https://www.aeaweb.org/articles?id=10.1257/jep.5.1.193
+      \endverb
+    \endentry
+    \entry{li2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=a324cd66887283b5a8195b6ffc4eb17e}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Zhuoxin},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3d33b99ab2b9fa2c7987e1d7f5873222}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Gang},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{fullhash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{fullhashraw}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{bibnamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorbibnamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authornamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorfullhash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorfullhashraw}{c8171e2286ae80234c13c1c35ec5f95f}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{number}{7}
+      \field{title}{On-Demand Delivery Platforms and Restaurant Sales}
+      \field{volume}{71}
+      \field{year}{2025}
+      \field{pages}{5788\bibrangedash 5804}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1287/mnsc.2021.01010
+      \endverb
+      \verb{urlraw}
+      \verb https://pubsonline.informs.org/doi/10.1287/mnsc.2021.01010
+      \endverb
+      \verb{url}
+      \verb https://pubsonline.informs.org/doi/10.1287/mnsc.2021.01010
+      \endverb
+    \endentry
+    \entry{long2000heteroscedasticity}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=aa55223b47813ca8d57114edbf0bbd4b}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={J.\bibnamedelimi Scott},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3e2f1dbb5b8bf7c5f23a7fdf962fabbe}{%
+           family={Ervin},
+           familyi={E\bibinitperiod},
+           given={Laurie\bibnamedelima H.},
+           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{fullhash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{fullhashraw}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{bibnamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorbibnamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authornamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorfullhash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorfullhashraw}{966b5d56c07bcfbcf90b0870c79145f4}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The American Statistician}
+      \field{number}{3}
+      \field{title}{Using Heteroscedasticity Consistent Standard Errors in the Linear Regression Model}
+      \field{volume}{54}
+      \field{year}{2000}
+      \field{pages}{217\bibrangedash 224}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1080/00031305.2000.10474549
+      \endverb
+      \verb{eprint}
+      \verb https://www.tandfonline.com/doi/pdf/10.1080/00031305.2000.10474549
+      \endverb
+      \verb{urlraw}
+      \verb https://www.tandfonline.com/doi/abs/10.1080/00031305.2000.10474549
+      \endverb
+      \verb{url}
+      \verb https://www.tandfonline.com/doi/abs/10.1080/00031305.2000.10474549
+      \endverb
+    \endentry
+    \entry{sriwongphanawes2024}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c49734a9bceac7d694eee924fa790dab}{%
+           family={Sriwongphanawes},
+           familyi={S\bibinitperiod},
+           given={Krittanai},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f3cc5dfe2938eba0c52eeaed13e33d50}{%
+           family={Fukuda},
+           familyi={F\bibinitperiod},
+           given={Daisuke},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{fullhash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{fullhashraw}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{bibnamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorbibnamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authornamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorfullhash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorfullhashraw}{16b9234acab734b1d758f4d7a297c63c}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Asian Transport Studies}
+      \field{title}{How Do Fares Affect the Utilization of Ride-hailing Services: Evidence from Uber Japan's Experiments}
+      \field{volume}{10}
+      \field{year}{2024}
+      \field{pages}{100121}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.eastsj.2023.100121
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S2185556023000263
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S2185556023000263
+      \endverb
+    \endentry
+    \entry{statista2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=62182ca58a739daa8ddd8a48b7b19abb}{%
+           family={{Statista}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhashraw}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{bibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorbibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authornamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhashraw}{62182ca58a739daa8ddd8a48b7b19abb}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Statista Market Insights}
+      \field{title}{Online Food Delivery Worldwide -- Revenue 2017--2027}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.statista.com/outlook/dmo/ecommerce/meal-delivery/worldwide
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/outlook/dmo/ecommerce/meal-delivery/worldwide
+      \endverb
+    \endentry
+    \entry{zhang2021}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2bae0cb6f54c11e6ffa4ccf9fe45278f}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xingyue},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=aee8d886eb203d44bc2478f1ccf6a3bc}{%
+           family={Demirkan},
+           familyi={D\bibinitperiod},
+           given={Haluk},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{48c441ba71f90319db20a47466396b33}
+      \strng{fullhash}{48c441ba71f90319db20a47466396b33}
+      \strng{fullhashraw}{48c441ba71f90319db20a47466396b33}
+      \strng{bibnamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorbibnamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authornamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorfullhash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorfullhashraw}{48c441ba71f90319db20a47466396b33}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Information \& Management}
+      \field{number}{4}
+      \field{title}{Between Online and Offline Markets: A Structural Estimation of Consumer Demand}
+      \field{volume}{58}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0378720621000410
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0378720621000410
+      \endverb
+    \endentry
+  \enddatalist
+  \datalist[entry]{apa/global//global/global/global}
+    \entry{andreyeva2010}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=13448d2b549cd8ce4382f666476aaf4b}{%
+           family={Andreyeva},
+           familyi={A\bibinitperiod},
+           given={Tatiana},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e8daca12640b36cbcd1bad9f3c71f5f2}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Michael\bibnamedelima W.},
+           giveni={M\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=682d4a5f0737b22ef501f5b9e469bc1b}{%
+           family={Brownell},
+           familyi={B\bibinitperiod},
+           given={Kelly\bibnamedelima D.},
+           giveni={K\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a6890841c73c2d01469fc2063e0571d8}
+      \strng{fullhash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{fullhashraw}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{bibnamehash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authorbibnamehash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authornamehash}{a6890841c73c2d01469fc2063e0571d8}
+      \strng{authorfullhash}{18c2965a4f3a21581db3b18603ed0ead}
+      \strng{authorfullhashraw}{18c2965a4f3a21581db3b18603ed0ead}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Journal of Public Health}
+      \field{number}{2}
+      \field{title}{The Impact of Food Prices on Consumption: A Systematic Review of Research on the Price Elasticity of Demand for Food}
+      \field{volume}{100}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{pages}{216\bibrangedash 222}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.2105/AJPH.2008.151415
+      \endverb
+    \endentry
+    \entry{bumagat2025economics}{misc}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=0a01018073a5d0855ceb8c9af4aebfe6}{%
+           family={Bumagat},
+           familyi={B\bibinitperiod},
+           given={Joshua\bibnamedelima Laurence},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=02f3613b0e3925431b7c90530f4504d9}{%
+           family={Ibana},
+           familyi={I\bibinitperiod},
+           given={Emir},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{fullhash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{fullhashraw}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{bibnamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorbibnamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authornamehash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorfullhash}{b0f6236dbd01d6d50e46ac8091406bda}
+      \strng{authorfullhashraw}{b0f6236dbd01d6d50e46ac8091406bda}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{ResearchGate Educational Repository}
+      \field{month}{10}
+      \field{title}{ECONOMICS FOR MANAGERS: Price Elasticity of Demand for Online Food Delivery Services: A Comparative Analysis of Peak and Off-Peak Hours in Metro Manila}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://researchgate.net
+      \endverb
+      \verb{url}
+      \verb https://researchgate.net
+      \endverb
+    \endentry
+    \entry{christensen2023}{report}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=0085ec5a35b8b08432551a488825d4dd}{%
+           family={Christensen},
+           familyi={C\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a95a52c45a829dedd5cedc25879fbf5d}{%
+           family={Nino},
+           familyi={N\bibinitperiod},
+           given={Gustavo},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c41e6acb7818e69ac909ffd170cc3289}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {National Bureau of Economic Research}%
+      }
+      \strng{namehash}{74b01bdd42cfd8757f11568b116442f3}
+      \strng{fullhash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{fullhashraw}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{bibnamehash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authorbibnamehash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authornamehash}{74b01bdd42cfd8757f11568b116442f3}
+      \strng{authorfullhash}{fc5601d3dc9d730814f4f19e97fa793e}
+      \strng{authorfullhashraw}{fc5601d3dc9d730814f4f19e97fa793e}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{number}{31330}
+      \field{series}{Working Paper Series}
+      \field{title}{The Demand for Mobility: Evidence from an Experiment with Uber Riders}
+      \field{type}{Working Paper}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.3386/w31330
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nber.org/papers/w31330
+      \endverb
+      \verb{url}
+      \verb http://www.nber.org/papers/w31330
+      \endverb
+    \endentry
+    \entry{christensen2021}{report}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=0085ec5a35b8b08432551a488825d4dd}{%
+           family={Christensen},
+           familyi={C\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c41e6acb7818e69ac909ffd170cc3289}{%
+           family={Osman},
+           familyi={O\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {IZA Institute of Labor Economics}%
+      }
+      \strng{namehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{fullhash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{fullhashraw}{9d1eb081bf32407d391c98de410045e7}
+      \strng{bibnamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorbibnamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authornamehash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorfullhash}{9d1eb081bf32407d391c98de410045e7}
+      \strng{authorfullhashraw}{9d1eb081bf32407d391c98de410045e7}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{14179}
+      \field{title}{The Demand for Mobility: Evidence from an Experiment with Uber Riders}
+      \field{type}{IZA Discussion Paper}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://www.iza.org/publications/dp/14179/
+      \endverb
+      \verb{url}
+      \verb https://www.iza.org/publications/dp/14179/
+      \endverb
+    \endentry
+    \entry{damayanti2023}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=fb953f6bfc12fdad688a1c4fbf7a9b03}{%
+           family={Damayanti},
+           familyi={D\bibinitperiod},
+           given={Ratih},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dea45abc8de5748603dbb5de8b996128}{%
+           family={Nuryakin},
+           familyi={N\bibinitperiod},
+           given={Chaikal},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=059e02442d06429062f848a1ccd1db78}{%
+           family={Muchtar},
+           familyi={M\bibinitperiod},
+           given={Pyan\bibnamedelima Amin},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{129e92fca535306143625b6b8fd4dc95}
+      \strng{fullhash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{fullhashraw}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{bibnamehash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authorbibnamehash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authornamehash}{129e92fca535306143625b6b8fd4dc95}
+      \strng{authorfullhash}{a81b2d1efaa7960df1425096b5fd3611}
+      \strng{authorfullhashraw}{a81b2d1efaa7960df1425096b5fd3611}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Economics and Finance in Indonesia}
+      \field{number}{1}
+      \field{title}{Household Demand for Food Prepared at Home and Food Away from Home in Indonesia}
+      \field{volume}{69}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{35\bibrangedash 46}
+      \range{pages}{12}
+      \verb{urlraw}
+      \verb https://scholarhub.ui.ac.id/efi/vol69/iss1/3/
+      \endverb
+      \verb{url}
+      \verb https://scholarhub.ui.ac.id/efi/vol69/iss1/3/
+      \endverb
+    \endentry
+    \entry{davidson1994stochastic}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=067f1e3d219657d2c89fbaa1325dbfab}{%
+           family={Davidson},
+           familyi={D\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford University Press}%
+      }
+      \strng{namehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{fullhash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{fullhashraw}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{bibnamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorbibnamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authornamehash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorfullhash}{067f1e3d219657d2c89fbaa1325dbfab}
+      \strng{authorfullhashraw}{067f1e3d219657d2c89fbaa1325dbfab}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780198774037}
+      \field{month}{10}
+      \field{title}{Stochastic Limit Theory: An Introduction for Econometricians}
+      \field{year}{1994}
+      \verb{doi}
+      \verb 10.1093/0198774036.001.0001
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/0198774036.001.0001
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/0198774036.001.0001
+      \endverb
+    \endentry
+    \entry{kaggle_food_demand}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b370c3fada8e237ee0259c6ae1d71796}{%
+           family={{Genpact / Analytics Vidhya}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{fullhash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{fullhashraw}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{bibnamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorbibnamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authornamehash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorfullhash}{b370c3fada8e237ee0259c6ae1d71796}
+      \strng{authorfullhashraw}{b370c3fada8e237ee0259c6ae1d71796}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Food Demand Forecasting}
+      \field{urlday}{1}
+      \field{urlmonth}{8}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.kaggle.com/datasets/kannanaikkal/food-demand-forecasting
+      \endverb
+      \verb{url}
+      \verb https://www.kaggle.com/datasets/kannanaikkal/food-demand-forecasting
+      \endverb
+    \endentry
+    \entry{kahneman1991}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d0dcea81f8587e7d56bb5dbe34a39d6c}{%
+           family={Kahneman},
+           familyi={K\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5f90496623bb691c5c893f5d36073b1b}{%
+           family={Knetsch},
+           familyi={K\bibinitperiod},
+           given={Jack\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b968bbcc6d4f6baf47e9fbac4012621e}{%
+           family={Thaler},
+           familyi={T\bibinitperiod},
+           given={Richard\bibnamedelima H.},
+           giveni={R\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{fda2d383a773a3b6271dea8baf8c82dd}
+      \strng{fullhash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{fullhashraw}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{bibnamehash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authorbibnamehash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authornamehash}{fda2d383a773a3b6271dea8baf8c82dd}
+      \strng{authorfullhash}{4a2c7e216ab4d58fbdfd426042538924}
+      \strng{authorfullhashraw}{4a2c7e216ab4d58fbdfd426042538924}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Economic Perspectives}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Anomalies: The Endowment Effect, Loss Aversion, and Status Quo Bias}
+      \field{volume}{5}
+      \field{year}{1991}
+      \field{pages}{193\bibrangedash 206}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1257/jep.5.1.193
+      \endverb
+      \verb{urlraw}
+      \verb https://www.aeaweb.org/articles?id=10.1257/jep.5.1.193
+      \endverb
+      \verb{url}
+      \verb https://www.aeaweb.org/articles?id=10.1257/jep.5.1.193
+      \endverb
+    \endentry
+    \entry{li2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=a324cd66887283b5a8195b6ffc4eb17e}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Zhuoxin},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3d33b99ab2b9fa2c7987e1d7f5873222}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Gang},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{fullhash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{fullhashraw}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{bibnamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorbibnamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authornamehash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorfullhash}{c8171e2286ae80234c13c1c35ec5f95f}
+      \strng{authorfullhashraw}{c8171e2286ae80234c13c1c35ec5f95f}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Management Science}
+      \field{number}{7}
+      \field{title}{On-Demand Delivery Platforms and Restaurant Sales}
+      \field{volume}{71}
+      \field{year}{2025}
+      \field{pages}{5788\bibrangedash 5804}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1287/mnsc.2021.01010
+      \endverb
+      \verb{urlraw}
+      \verb https://pubsonline.informs.org/doi/10.1287/mnsc.2021.01010
+      \endverb
+      \verb{url}
+      \verb https://pubsonline.informs.org/doi/10.1287/mnsc.2021.01010
+      \endverb
+    \endentry
+    \entry{long2000heteroscedasticity}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=aa55223b47813ca8d57114edbf0bbd4b}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={J.\bibnamedelimi Scott},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3e2f1dbb5b8bf7c5f23a7fdf962fabbe}{%
+           family={Ervin},
+           familyi={E\bibinitperiod},
+           given={Laurie\bibnamedelima H.},
+           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{fullhash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{fullhashraw}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{bibnamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorbibnamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authornamehash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorfullhash}{966b5d56c07bcfbcf90b0870c79145f4}
+      \strng{authorfullhashraw}{966b5d56c07bcfbcf90b0870c79145f4}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The American Statistician}
+      \field{number}{3}
+      \field{title}{Using Heteroscedasticity Consistent Standard Errors in the Linear Regression Model}
+      \field{volume}{54}
+      \field{year}{2000}
+      \field{pages}{217\bibrangedash 224}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1080/00031305.2000.10474549
+      \endverb
+      \verb{eprint}
+      \verb https://www.tandfonline.com/doi/pdf/10.1080/00031305.2000.10474549
+      \endverb
+      \verb{urlraw}
+      \verb https://www.tandfonline.com/doi/abs/10.1080/00031305.2000.10474549
+      \endverb
+      \verb{url}
+      \verb https://www.tandfonline.com/doi/abs/10.1080/00031305.2000.10474549
+      \endverb
+    \endentry
+    \entry{sriwongphanawes2024}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c49734a9bceac7d694eee924fa790dab}{%
+           family={Sriwongphanawes},
+           familyi={S\bibinitperiod},
+           given={Krittanai},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f3cc5dfe2938eba0c52eeaed13e33d50}{%
+           family={Fukuda},
+           familyi={F\bibinitperiod},
+           given={Daisuke},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{fullhash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{fullhashraw}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{bibnamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorbibnamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authornamehash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorfullhash}{16b9234acab734b1d758f4d7a297c63c}
+      \strng{authorfullhashraw}{16b9234acab734b1d758f4d7a297c63c}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Asian Transport Studies}
+      \field{title}{How Do Fares Affect the Utilization of Ride-hailing Services: Evidence from Uber Japan's Experiments}
+      \field{volume}{10}
+      \field{year}{2024}
+      \field{pages}{100121}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.eastsj.2023.100121
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S2185556023000263
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S2185556023000263
+      \endverb
+    \endentry
+    \entry{statista2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=62182ca58a739daa8ddd8a48b7b19abb}{%
+           family={{Statista}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{fullhashraw}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{bibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorbibnamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authornamehash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhash}{62182ca58a739daa8ddd8a48b7b19abb}
+      \strng{authorfullhashraw}{62182ca58a739daa8ddd8a48b7b19abb}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Statista Market Insights}
+      \field{title}{Online Food Delivery Worldwide -- Revenue 2017--2027}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.statista.com/outlook/dmo/ecommerce/meal-delivery/worldwide
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/outlook/dmo/ecommerce/meal-delivery/worldwide
+      \endverb
+    \endentry
+    \entry{zhang2021}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2bae0cb6f54c11e6ffa4ccf9fe45278f}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xingyue},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=aee8d886eb203d44bc2478f1ccf6a3bc}{%
+           family={Demirkan},
+           familyi={D\bibinitperiod},
+           given={Haluk},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{48c441ba71f90319db20a47466396b33}
+      \strng{fullhash}{48c441ba71f90319db20a47466396b33}
+      \strng{fullhashraw}{48c441ba71f90319db20a47466396b33}
+      \strng{bibnamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorbibnamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authornamehash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorfullhash}{48c441ba71f90319db20a47466396b33}
+      \strng{authorfullhashraw}{48c441ba71f90319db20a47466396b33}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Information \& Management}
+      \field{number}{4}
+      \field{title}{Between Online and Offline Markets: A Structural Estimation of Consumer Demand}
+      \field{volume}{58}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0378720621000410
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/abs/pii/S0378720621000410
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
