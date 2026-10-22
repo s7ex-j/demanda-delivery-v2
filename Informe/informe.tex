@@ -42,7 +42,18 @@
 \usepackage{rotating}
 \usepackage{threeparttable}
 \usepackage{float}
-\usepackage{placeins}
+\usepackage[section]{placeins}
+\raggedbottom
+% apa7 sube las notas de tabla medio renglón (pensado para su \tablenote) y las justifica;
+% con threeparttable eso las monta sobre \bottomrule. Se separan y se alinean a la izquierda.
+\makeatletter
+\patchcmd{\TPT@doparanotes}{\vspace{-.5\baselineskip}}{\vspace{.3\baselineskip}}{}{\PackageWarning{informe}{patch tablenotes vspace fallo}}
+\patchcmd{\TPT@doparanotes}{\parindent\z@}{\raggedright\parindent\z@}{}{\PackageWarning{informe}{patch tablenotes ragged fallo}}
+\makeatother
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.75}
 \geometry{margin=2.2cm, bottom=2.0cm}
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
 
@@ -134,7 +145,7 @@ Tras unir las tres tablas mediante \texttt{meal\_id} y \texttt{center\_id} (merg
     \item \texttt{category}, \texttt{center\_type}: variables categ\'oricas para efectos fijos.
 \end{itemize}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Estad\'istica descriptiva de las variables clave (antes de transformaciones).}
 \label{table:descriptivos}
@@ -162,21 +173,21 @@ M\'aximo & 866,27 & 866,27 & 24\,299 & 561,60 \\
 
 La dispersi\'on considerable de \texttt{num\_orders} (desviaci\'on est\'andar 1,5 veces la media, m\'aximo 24\,299 vs. mediana 136) y su asimetr\'ia marcada a la derecha motivan la transformaci\'on logar\'itmica descrita en la secci\'on \nameref{sec:preparacion}. El precio final promedio (332,24 unidades monetarias del conjunto de datos) es inferior al precio base promedio (354,16 unidades monetarias del conjunto de datos), consistente con una prevalencia neta de descuentos, aunque --como se detalla en la siguiente secci\'on-- en 25,43\% de los casos el precio final super\'o a la referencia.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/evolucion_precio_demanda_semanal.png}
 \caption{Evoluci\'on semanal del precio promedio de checkout y la demanda agregada (145 semanas). Muestra la din\'amica temporal conjunta de precio y cantidad. Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
 \label{fig:evolucion_precio_demanda}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/top10_comidas_demanda.png}
 \caption{Top 10 comidas por demanda total acumulada (145 semanas). Muestra la concentraci\'on de la demanda en pocos productos estrella. Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
 \label{fig:top10_comidas}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/histograma_variacion_precio_pct.png}
 \caption{Distribuci\'on de la variaci\'on porcentual de precio (\texttt{base\_price} $\rightarrow$ \texttt{checkout\_price}). Positivo = descuento, Negativo = aumento. Media = 5,72\%, 25,43\% con aumento. Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
@@ -238,7 +249,7 @@ Dado que el m\'inimo observado de \texttt{num\_orders} es 13 (no existen ceros e
 
 \Cref{table:descriptivos_completa} presenta los estad\'isticos descriptivos de todas las variables num\'ericas relevantes despu\'es de la preparaci\'on, incluyendo las transformaciones logar\'itmicas y las variables de precio derivadas.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Estad\'isticos descriptivos completos tras preparaci\'on de datos.}
 \label{table:descriptivos_completa}
@@ -277,21 +288,21 @@ Observaciones destacadas de \cref{table:descriptivos_completa}:
 
 El \textit{DataFrame} final resultante (\texttt{demanda\_limpia.csv}) contiene 456\,548 filas y 20 columnas, listo para la etapa de modelado descrita a continuaci\'on.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=1.00\textwidth]{figuras/elasticidad_por_categoria.png}
 \caption{Elasticidad-precio proxy por categor\'ia de comida (Correlaci\'on log-log entre \texttt{checkout\_price} y \texttt{num\_orders}). L\'inea roja: elasticidad OLS principal (-0,759). Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
 \label{fig:elasticidad_por_categoria}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=1.00\textwidth]{figuras/comparacion_tipo_centro.png}
 \caption{Comparaci\'on de demanda promedio por tipo de centro (TYPE\textunderscore A, TYPE\textunderscore B, TYPE\textunderscore C). TYPE\textunderscore B muestra mayor demanda relativa; TYPE\textunderscore C, menor. Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
 \label{fig:comparacion_tipo_centro}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/efecto_promociones_matriz.png}
 \caption{Matriz de efectos promocionales: demanda promedio por combinaci\'on de \texttt{emailer\_for\_promotion} y \texttt{homepage\_featured}. La exposici\'on en homepage tiene mayor impacto marginal que el emailer. Fuente: elaboración propia a partir de los datos de Kaggle/Genpact.}
@@ -364,7 +375,7 @@ Se estiman tres especificaciones anidadas para evaluar robustez y comparar ajust
 
 En el Modelo 3, el coeficiente $\beta_1$ se interpreta como \textit{semi-elasticidad}: el cambio porcentual en la demanda por cada unidad monetaria de aumento en el precio (no elasticidad constante). \Cref{tab:variables-modelos} resume las variables incluidas en cada especificaci\'on; los criterios de ajuste (AIC, BIC, $R^2$) se reportan y comparan en la secci\'on \nameref{subsec:comparacion_modelos}, junto con los resultados.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Variables incluidas en cada especificaci\'on del modelo.}
 \label{tab:variables-modelos}
@@ -422,7 +433,7 @@ El bootstrap se realiz\'o sobre el modelo base por simplicidad computacional; lo
 
 \Cref{tab:comparacion_modelos} presenta los criterios de informaci\'on y bondad de ajuste de las tres especificaciones descritas en la secci\'on \nameref{sec:especificaciones-modelo}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Comparaci\'on de modelos alternativos: criterios de informaci\'on y bondad de ajuste.}
 \label{tab:comparacion_modelos}
@@ -444,7 +455,7 @@ El modelo \textit{semi-log} con controles presenta el menor AIC y BIC, y el mayo
 
 \Cref{tab:modelo_principal_completa} presenta los resultados completos del modelo \textit{log-log} con controles. Dada la estructura de panel de los datos (observaciones repetidas por combinaciones centro-comida a lo largo de 145 semanas), la inferencia principal utiliza \textbf{errores estándar agrupados por entidad \texttt{center\_id} $\times$ \texttt{meal\_id}} \parencite{cameron2015practitioner}, que permiten correlación arbitraria dentro de cada entidad centro-comida. Los errores HC3 se reportan solo como referencia; no corrigen la autocorrelación intra-panel (Durbin-Watson $=1,199$).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Resultados completos del modelo log-log con controles (variable dependiente: $\log(\texttt{num\_orders})$). \textbf{Inferencia principal: agrupado por entidad \texttt{center\_id} $\times$ \texttt{meal\_id}}. HC3 solo como referencia.}
 \label{tab:modelo_principal_completa}
@@ -486,7 +497,7 @@ Intercept & 9,0977 & 0,029 & 0,236 & 38,51 & $<0,001$ & [8,635, 9,561] \\
 
 \textbf{Comparaci\'on con modelos alternativos.} \Cref{tab:comparacion_elasticidades} contrasta la elasticidad del modelo principal con las especificaciones alternativas.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Comparaci\'on de elasticidades-precio entre especificaciones.}
 \label{tab:comparacion_elasticidades}
@@ -511,7 +522,7 @@ Esta secci\'on reporta los resultados num\'ericos de los tests descritos en la s
 \subsubsection{Heterocedasticidad}
 \label{subsec:heterocedasticidad}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Prueba de Breusch-Pagan para heterocedasticidad.}
 \label{tab:breusch_pagan}
@@ -529,7 +540,7 @@ Ambas versiones de la prueba rechazan rotundamente la hip\'otesis nula de homoce
 
 \Cref{tab:se_comparacion} compara los errores est\'andar cl\'asicos (OLS) frente a los robustos HC3 para los coeficientes de inter\'es principal.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Comparaci\'on de errores est\'andar: cl\'asico vs. HC3 (coeficientes clave).}
 \label{tab:se_comparacion}
@@ -551,7 +562,7 @@ Los errores est\'andar HC3 son iguales o mayores que los cl\'asicos, reflejando 
 \subsubsection{Multicolinealidad}
 \label{subsec:multicolinealidad}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Factores de Inflaci\'on de Varianza (VIF) --- Modelo log-log con controles (especificación principal).}
 \label{tab:vif_resultados}
@@ -574,7 +585,7 @@ Todos los VIF son sustancialmente inferiores a 5 (y a 10), indicando ausencia de
 \subsubsection{Normalidad de los residuos}
 \label{subsec:normalidad}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Prueba de normalidad (Jarque-Bera) y momentos de los residuos.}
 \label{tab:normalidad}
@@ -592,9 +603,9 @@ Curtosis (kurtosis) & 3,205 \\
 
 La prueba de Jarque-Bera rechaza la normalidad exacta ($p < 0,001$), con residuos que presentan ligera asimetr\'ia negativa ($-0,352$) y curtosis cercana a la normal (3,205 vs. 3,0 te\'orico). Con $N = 456\,548$, la prueba tiene poder excesivo para detectar desviaciones min\'usculas sin relevancia pr\'actica: el Teorema del L\'imite Central asegura que los estimadores MCO son asint\'oticamente normales, y los errores est\'andar HC3 son v\'alidos sin normalidad exacta de los residuos. Esta misma advertencia aplica en general a los tests de este informe (VIF, RESET, Breusch-Pagan, igualdad de coeficientes): con $N=456\,548$, un $p<0,001$ generalizado no implica necesariamente relevancia econ\'omica, y la magnitud del efecto debe evaluarse junto con el p-valor, no en su lugar. \Cref{fig:qqplot} muestra el gr\'afico Q-Q de los residuos, en el que se observan desviaciones moderadas de normalidad concentradas en las colas, m\'as pronunciadas en la cola izquierda (casos donde el modelo sobreestim\'o la demanda real).
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figuras/qqplot_residuos_modelo_loglog_controles.png}
+\includegraphics[width=0.5\textwidth]{figuras/qqplot_residuos_modelo_loglog_controles.png}
 \caption{Gr\'afico Q-Q de residuos del modelo log-log con controles (especificaci\'on principal). Submuestra n=5\,000 de 456\,548. Fuente: elaboración propia.}
 \label{fig:qqplot}
 \end{figure}
@@ -609,7 +620,7 @@ El estad\'istico de Durbin-Watson para el modelo principal es $DW = 1,199$. \tex
 
 \Cref{tab:bootstrap} presenta los resultados del bootstrap descrito en la secci\'on \nameref{sec:bootstrap} (1\,000 replicaciones, semilla 42) sobre el modelo \textit{log-log} base.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Intervalo de confianza bootstrap (95\%) para la elasticidad precio (modelo base).}
 \label{tab:bootstrap}
@@ -628,7 +639,7 @@ IC 95\% anal\'itico (HC3, modelo base) & $[-0,958, -0,945]$ \\
 
 La distribuci\'on bootstrap de la elasticidad (\cref{fig:bootstrap_dist}) es aproximadamente normal, centrada en $-0,9514$, muy pr\'oxima a la estimaci\'on MCO puntual del modelo base ($-0,9516$). El IC 95\% bootstrap $[-0,9578, -0,9450]$ (1\,000 réplicas, semilla 42, \texttt{src/modeling.py::bootstrap\_elasticidad}) coincide prácticamente con el IC anal\'itico basado en HC3 $[-0,958, -0,945]$ del modelo base (EE HC3 $=0,0034$). Sin embargo, este bootstrap i.i.d. remuestrea filas independientemente y no reproduce la dependencia panel ni el clustering del modelo principal. Por tanto, se utiliza \'unicamente como diagnóstico complementario y no como validación de la inferencia agrupada del modelo principal con controles.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figuras/bootstrap_elasticidad_distribucion.png}
 \caption{Distribuci\'on bootstrap de la elasticidad-precio (1\,000 replicaciones). L\'inea roja: media bootstrap; l\'ineas azules: IC 95\% percentil. Fuente: elaboración propia.}
@@ -645,7 +656,7 @@ La distribuci\'on bootstrap de la elasticidad (\cref{fig:bootstrap_dist}) es apr
 
 \Cref{tab:comparacion_literatura} presenta la s\'intesis de estudios de referencia, organizados en tres grupos: (A) elasticidad-precio de la demanda de comida fuera del hogar y delivery, directamente comparable en definici\'on de mercado; (B) un contexto af\'in (movilidad y comercio electr\'onico bajo demanda), \'util como referencia contextual pero no directamente comparable en m\'etrica; y (C) soporte metodol\'ogico y de mercado. Cada fuente fue verificada contra el art\'iculo, \textit{working paper} o abstract original antes de incluirse. \Cref{fig:comparacion_elasticidad_literatura} ilustra los estimadores puntuales disponibles de los Grupos A y B.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Comparaci\'on de elasticidades-precio de la demanda: estudios de referencia y presente trabajo.}
 \label{tab:comparacion_literatura}
@@ -686,28 +697,28 @@ La distribuci\'on bootstrap de la elasticidad (\cref{fig:bootstrap_dist}) es apr
 \end{table}
 
 \enlargethispage{24pt}
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/comparacion_elasticidad_literatura.png}
 \caption{Comparación de estimadores de elasticidad-precio disponibles en la literatura verificada. Grupo A (azul): estudios de demanda de comida/delivery directamente comparables; Grupo B (gris): contexto afín con métrica distinta (Christensen \& Osman 2021, movilidad total; Zhang \& Demirkan 2021, canal online y offline; Sriwongphanawes \& Fukuda 2024, punto medio y rango). El rombo naranja marca el estimador del presente estudio ($-0,759$, IC $[-0,843,-0,675]$). Bumagat \& Ibana (2025) se grafican como segmento pico--no pico (documento no arbitrado). Li \& Wang (2025) y Christensen et al. (2023) no se grafican por no reportar una elasticidad puntual. \textbf{Advertencia:} los estimadores no son estrictamente comparables (distintas definiciones de mercado, especificaciones y muestras).}
 \label{fig:comparacion_elasticidad_literatura}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/comparacion_todos_modelos.png}
 \caption{Comparación de estimadores de elasticidad: 13 especificaciones del proyecto (OLS base, OLS con controles, Semi-log, Panel FE, IV 2SLS, IV justamente identificado, RCS OLS, IV Control Function y cinco regresiones cuantiles). Línea punteada gris: elasticidad unitaria (-1). Línea punteada naranja: OLS principal (-0,759).}
 \label{fig:comparacion_todos_modelos}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/elasticidad_puntual_rcs.png}
 \caption{Elasticidad puntual estimada mediante RCS con cuatro nudos explícitos en P5/P35/P65/P95 de log-precio, evaluada a lo largo de la distribución observada. Línea punteada naranja: elasticidad log-log constante ($-0,759$). La curva no es monótona: $+0,04$ en P5 (precio $=121,28$), $-1,44$ en la mediana (P50, precio $=296,82$), un mínimo de $\approx -1,51$ cerca de precio $\approx 329$ (próximo al precio medio, 332,24) y $-1,25$ en P95 (precio $=640,23$). El contraste F anidado frente al modelo log-log con controles es $F=3\,607,28$ (2 gl., $p \approx0$).}
 \label{fig:elasticidad_puntual_rcs}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/rcs_elasticidad_bandas_confianza_bootstrap.png}
 \caption{Elasticidad puntual RCS y banda de confianza bootstrap percentil del 95\% punto a punto. La banda se obtiene mediante 2\,000 replicaciones clusterizadas por centro, reestimando la curva RCS con nudos explícitos P5/P35/P65/P95. Los intervalos son puntuales y no simultáneos. Línea naranja: proyección OLS log-log constante ($-0,759$); línea horizontal discontinua: elasticidad unitaria ($-1$).}
@@ -810,7 +821,7 @@ Se estim\'o un modelo de panel con efectos fijos de dos v\'ias usando \texttt{li
 
 donde $\alpha_i$ son los efectos fijos de entidad (centro-comida) y $\lambda_t$ los de tiempo (semana).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Resultados del modelo panel con efectos fijos de dos v\'ias.}
 \label{tab:panel_fe_resultados}
@@ -836,7 +847,7 @@ La elasticidad panel FE ($-1,5985$) es considerablemente mayor en magnitud que l
 
 \paragraph{Bootstrap clusterizado (por centro, referencia histórica):} En una versión anterior, como robustez adicional, se ejecut\'o un bootstrap remuestreando 77 centros completos con reemplazo ($B=200$ iteraciones, manteniendo toda la estructura de dependencia intra-centro). La elasticidad media fue $-1,5944$ (DE $=0,0278$, IC 95\% normal $[-1,6489, -1,5399]$), consistente con la estimación analítica ($-1,5985$). Todas las 200 iteraciones fueron válidas. \textbf{Nota:} Este bootstrap simple por centro no captura correctamente la dependencia cruzada entidad-tiempo; ha sido superado por el pairs bootstrap (1000 iteraciones, media $-1,5992$, IC $[-1,6506, -1,5455]$), ver Figura \ref{fig:panel_fe_pairs_bootstrap}. El archivo de resultados de esa ejecución ($B=200$) no se conserva en el repositorio, por lo que sus cifras no son reproducibles desde él; el pairs bootstrap sí lo es (\texttt{reports/diagnostics/pairs\_bootstrap\_panel\_fe\_results.npy}).
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/panel_fe_pairs_bootstrap.png}
 \caption{Pairs Bootstrap para Panel FE (dos vías): distribución de coeficientes bootstrap (1000 iteraciones válidas, remuestreo de los 77 centros, semilla 42; réplicas en \texttt{reports/diagnostics/pairs\_bootstrap\_panel\_fe\_replicas.npz}). Media: $-1,5992$, IC 95\%: $[-1,6506, -1,5455]$. Fuente: Elaboración Propia.}
@@ -845,9 +856,9 @@ La elasticidad panel FE ($-1,5985$) es considerablemente mayor en magnitud que l
 
 \paragraph{Normalidad de residuos (Shapiro-Wilk submuestreado):} Evaluado sobre una submuestra aleatoria de 5\,000 residuos (de 456\,548), $W = 0,9829$, $p < 0,001$. Al igual que en el modelo OLS, el test rechaza la normalidad exacta por tama\~no muestral excesivo; la desviaci\'on es moderada y el TCL asegura validez asint\'otica.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figuras/qqplot_panel_fe_residuos.png}
+\includegraphics[width=0.5\textwidth]{figuras/qqplot_panel_fe_residuos.png}
 \caption{Q-Q plot de residuos del modelo Panel FE (dos v\'ias), submuestra n=5\,000 de 456\,548. Shapiro-Wilk: $W=0,9829$, $p<0,001$. Fuente: Elaboración Propia.}
 \label{fig:qqplot_panel_fe}
 \end{figure}
@@ -864,7 +875,7 @@ Se construyeron dos instrumentos reales para \texttt{checkout\_price} usando \'u
 
 Se excluyeron 4 observaciones (0,001\%) sin información de otros centros para el instrumento 2. La primera etapa presenta un $R^2$ global de 0,9767. Con una sola variable endógena, el $R^2$ parcial de Shea coincide con el $R^2$ parcial conjunto de los instrumentos excluidos: \textbf{0,9226}. El F de los instrumentos excluidos (q=2) es \textbf{2,72 $\times$ 10$^6$} bajo homocedasticidad, $1,43 \times 10^6$ con varianza robusta (HC1) y \textbf{$2,18 \times 10^5$ con varianza agrupada por \texttt{center\_id}}, la versión coherente con la dependencia intra-centro. Como diagnóstico complementario se reporta la contribución \emph{única} de cada instrumento condicionada al otro: $R^2$ parcial 0,6065 y $F$ (q=1) $= 7,04 \times 10^5$ para \texttt{log\_precio\_prom\_otros\_centros}; $R^2$ parcial 0,1675 y $F = 9,18 \times 10^4$ para \texttt{log\_base\_price} (estos no son estadísticos de Shea, que se definen por regresor endógeno). Para 2 instrumentos y 1 endógena, \textcite{stock2005testing} tabulan valores críticos de \emph{tamaño} (10\% de tamaño máximo: 19,93); los valores de sesgo relativo requieren al menos 3 instrumentos. Todos los estadísticos superan ese umbral por varios órdenes de magnitud: no hay problema de instrumento débil.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Resultados 2SLS con dos instrumentos (modelo principal IV, especificación con controles).}
 \label{tab:iv_2sls_resultados}
@@ -931,15 +942,15 @@ Hasta N=20\,000 la tasa de rechazo es cercana al nivel nominal y la J media rond
     \item \textbf{S\'intesis}: (1) Exogeneidad rechazada $\rightarrow$ \textbf{evidencia de endogeneidad}, IV motivado; (2) Relevancia instrumental fuerte ($R^2$ parcial de Shea $=0,9226$; F agrupado $=2,18\times10^5$); (3) Hansen J rechaza solo con ponderación heterocedástica ($33,28$) y no con ponderación agrupada ($0,92$, $p=0,34$), y la exclusión no es contrastable $\rightarrow$ \textbf{resultado IV como análisis de sensibilidad, no identificación causal}. \textbf{Importante:} la inferencia del IV se reporta con EE agrupados por \texttt{center\_id} (0,0502), nueve veces mayores que los robustos a heterocedasticidad (0,0056); ninguno de los dos \textbf{resuelve el problema de validez de los instrumentos} (exclusión, relevancia, exogeneidad); Hansen J es una prueba de validez instrumental (sobreidentificación), no de inferencia.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figuras/qqplot_iv_2sls_residuos.png}
+\includegraphics[width=0.5\textwidth]{figuras/qqplot_iv_2sls_residuos.png}
 \caption{Q-Q plot de residuos del modelo IV 2SLS principal (con controles), submuestra $n=5\,000$ de 456\,544. Coef. 2SLS: $-0,8414$ (EE robusto 0,0056; agrupado por centro 0,0502). Fuente: Elaboración Propia.}
 \label{fig:qqplot_iv_2sls}
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/iv_primera_etapa_instrumentos.png}
 \caption{Relevancia de instrumentos IV 2SLS (estrategia Hausman-Nevo, primera etapa con controles). Panel A: precio observado frente al predicho por la primera etapa (submuestra de 10\,000). Panel B: $R^2$ parciales --- conjunto de los dos instrumentos ($=$ $R^2$ parcial de Shea, 0,9226) y contribución única de cada instrumento condicionada al otro (0,6065 otros centros; 0,1675 \texttt{base\_price}). F de instrumentos excluidos: $2,72 \times 10^6$ (homocedástico), $2,18 \times 10^5$ (agrupado por centro); valor crítico de tamaño Stock-Yogo 19,93. Fuente: Elaboración Propia.}
@@ -978,7 +989,7 @@ El modelo OLS estima el efecto del precio en la \textbf{media condicional} de la
 
 \Cref{tab:quantile_regression} presenta los resultados puntuales para el modelo log-log con controles (misma especificación principal). La tabla extendida con errores estándar analíticos y anchura de IC se encuentra en el \nameref{sec:appendix} (\cref{tab:appendix_quantile_full}).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Regresión cuantil: elasticidad precio por cuantil de la demanda condicional (5 cuantiles). IC 95\% analítico (EE de \textit{statsmodels} QuantReg, kernel Epanechnikov).}
 \label{tab:quantile_regression}
@@ -1001,7 +1012,7 @@ La elasticidad varía sistemáticamente: es \textbf{más elástica en la cola su
 
 \textbf{Advertencia inferencial:} Los intervalos de confianza son analíticos (errores estándar asintóticos de la regresión cuantil, que suponen observaciones independientes) y \textbf{no preservan la estructura de dependencia panel}. Por tanto, los IC de cuantiles deben interpretarse como \textbf{robustez condicional}, no con idéntico nivel inferencial que el estimador OLS clusterizado (agrupado center\_id $\times$ meal\_id).
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figuras/quantile_regression_elasticidad.png}
 \caption{Elasticidad precio por cuantil de la distribución condicional de la demanda. Regresión cuantil con controles (modelo log-log). La línea discontinua muestra la elasticidad OLS de media condicional ($-0,759$). Fuente: elaboración propia.}
@@ -1015,7 +1026,7 @@ La elasticidad varía sistemáticamente: es \textbf{más elástica en la cola su
 
 El modelo principal asume efectos aditivos: precio y promociones afectan la demanda de forma independiente. Para testear no-aditividad, se añadieron términos de interacción \texttt{log\_checkout\_price:emailer\_for\_promotion} y \texttt{log\_checkout\_price:homepage\_featured}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Modelo log-log con interacción Precio × Promoción (coeficientes clave).}
 \label{tab:precio_promo_interaccion}
@@ -1048,7 +1059,7 @@ Test de Wald conjunto (H0: ambos coeficientes de interacción $= 0$):
 
 Esta no-aditividad tiene implicaciones directas para fijación dinámica de precios: la asociación combinada de precio y promoción no es simplemente la suma de sus asociaciones marginales aisladas.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/interaccion_precio_promo.png}
 \caption{Interacci\'on Precio $\times$ Promoci\'on: no-aditividad estad\'isticamente significativa. Panel A: elasticidad condicional seg\'un estado promocional. Panel B: efecto marginal de promociones vs. nivel de precio. Wald F=652,28, $p \approx0$. Fuente: elaboración propia.}
@@ -1061,7 +1072,7 @@ Esta no-aditividad tiene implicaciones directas para fijación dinámica de prec
 
 El test RESET (Regression Specification Error Test) evalúa si la forma funcional log-log está correctamente especificada, añadiendo potencias de los valores ajustados ($\hat{y}^2, \hat{y}^3$) y testeando su significancia conjunta \parencite{ramsey1969tests}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Test RESET para el modelo log-log con controles (especificación principal).}
 \label{tab:reset_test}
@@ -1079,7 +1090,7 @@ Evidencia de misspecification & Sí \\
 
 El test \textbf{rechaza rotundamente} la especificación correcta ($p \approx 0$), lo que es consistente con que la forma funcional log-log con elasticidad constante es inadecuada. Este resultado es consistente con el contraste F anidado log-log frente a RCS ($F=3\,607,28$, $p \approx0$): la relación precio-demanda presenta no linealidad estimada que no es capturada por el modelo lineal en logaritmos.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=1.00\textwidth]{figuras/reset_test_visual.png}
 \caption{Evidencia visual del test RESET: residuos vs. valores ajustados (Panel A) y residuos vs. log-precio (Panel B). La curvatura cuadrática visible es consistente con misspecification funcional. $F=153,07$, $p \approx 3,5 \times 10^{-67}$. Fuente: elaboración propia.}
@@ -1108,28 +1119,28 @@ Dado que (1) la estimación IV 2SLS aportó evidencia de endogeneidad (Wu-Hausma
     \item Coeficiente $\hat{v}$ (estimación puntual muestra completa) $= +1,0002$ (EE convencional $=0,0177$; bootstrap agrupado por centro: DE $=0,1654$, IC 95\% $[0,664;\,1,314]$)
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/iv_cf_panel_a_primera_etapa.png}
 \caption{Panel A. IV Función de Control: primera etapa. Precio de checkout observado frente al precio ajustado con instrumentos Hausman--Nevo y controles. $R^2=0,977$; $R^2$ parcial de Shea $=0,9226$; F de instrumentos excluidos (q=2) $= 2,72 \times 10^6$ (homocedástico), $2,18\times10^5$ (agrupado por centro); $n=456\,544$. Fuente: elaboración propia.}
 \label{fig:iv_cf_panel_a}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/iv_cf_panel_b_componente_endogeno.png}
 \caption{Panel B. Componente endógeno del precio ($\hat{v}$): distribución de los residuos de la primera etapa y normal teórica. Muestra completa ($n=456\,544$): media $=0$ por construcción, desv. est. $=0,0736$. Submuestra graficada ($n=10\,000$, título de la figura): media $\approx 0,0003$, desv. est. $\approx 0,0728$. Fuente: elaboración propia.}
 \label{fig:iv_cf_panel_b}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/iv_cf_panel_c_elasticidad_puntual.png}
 \caption{Panel C. Elasticidad puntual con coeficientes de la muestra completa: Control Function (RCS$+\hat{v}$) con banda percentil bootstrap del 95\% punto a punto (5\,000 réplicas agrupadas por centro, ambas etapas reestimadas) y RCS--only (OLS, misma muestra). Puntos: precio medio (332,24) y mediana (296,82). Fuente: elaboración propia; \texttt{reports/certified/bootstrap\_cf\_canonical\_replicas.npz}.}
 \label{fig:iv_cf_panel_c}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Tests en segunda etapa de la Función de Control IV-RCS (estimación puntual muestra completa).}
 \label{tab:control_function_tests}
@@ -1159,7 +1170,7 @@ Se implementaron cuatro comprobaciones de robustez adicionales que abordan la es
 
 El modelo principal estima una elasticidad promedio agregada. Para evaluar si la elasticidad-precio difiere sistem\'aticamente entre las 14 categorías de comida, se estimó un modelo con interacciones \texttt{log\_checkout\_price $\times$ category} y se testeó la hipótesis nula conjunta de igualdad (Wald test, 13 grados de libertad).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Test de Wald: igualdad de elasticidad-precio entre 14 categorías.}
 \label{tab:wald_categoria}
@@ -1176,7 +1187,7 @@ Rechaza H0 (alpha=0,05) & \textbf{Sí} \\
 
 El test \textbf{rechaza rotundamente} la igualdad ($p \approx 0$). La elasticidad varía sustancialmente entre categorías: desde \textbf{$-0,28$} (Pasta, inelástica) hasta \textbf{$-2,49$} (Fish; Seafood $-2,48$, altamente elásticas). Esto implica que una única elasticidad agregada oculta heterogeneidad económica real; los valores específicos por categoría pueden servir como \textbf{referencia para segmentar} la sensibilidad estimada, sin que ello demuestre que aplicar esos coeficientes produzca el pricing óptimo.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Elasticidad-precio por categoría (efecto marginal, modelo con interacciones).}
 \label{tab:elasticidad_por_categoria}
@@ -1207,7 +1218,7 @@ Starters & $-1,43$ & Elástica \\
 
 El conjunto de datos contiene combinaciones centro--comida con distinta cobertura temporal (número de semanas observadas). Para evaluar si los ítems con poca frecuencia temporal afectan la elasticidad principal, se filtró la muestra reteniendo solo combinaciones centro--comida con al menos 50 semanas observadas.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Robustez: submuestra con al menos 50 semanas observadas por combinación centro--comida.}
 \label{tab:submuestra_50obs}
@@ -1228,7 +1239,7 @@ La diferencia es de \textbf{+0,0037} (0,5\% en términos relativos, muy inferior
 
 Para verificar que observaciones extremas de precio no impulsen de forma desproporcionada la estimación, se recortó el 1\% superior e inferior de \texttt{checkout\_price} (P1 = 96,03, P99 = 708,13).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Robustez: sensibilidad excluyendo colas 1\% de precio.}
 \label{tab:sensibilidad_outliers}
@@ -1249,7 +1260,7 @@ La diferencia es de \textbf{$-0,0525$} (aprox. 6,9\% en magnitud relativa; los I
 
 El análisis de Panel FE reportó un ratio de clustering 2,10x. Aquí se extiende la comparación al modelo OLS principal (log-log con controles), contrastando cuatro estimadores de varianza.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Comparación de errores estándar: HC3, clustering por entidad, Panel FE y procedimientos bootstrap.}
 \label{tab:comparacion_ee}
@@ -1294,7 +1305,7 @@ Wild Cluster Bootstrap IV (ambas etapas) & $-0,9607$ & 0,0281 & $[-1,0141, -0,90
     \item \textbf{Recomendación práctica}: Para OLS log-log principal, usar \textbf{agrupado por entidad \texttt{center\_id} $\times$ \texttt{meal\_id}} (inferencia principal). HC3 solo como referencia. Para Panel FE, usar \textbf{cluster por entidad} (center\_id-meal\_id). Para IV 2SLS, usar \textbf{EE agrupados por \texttt{center\_id}} o el wild cluster bootstrap; los EE robustos a heterocedasticidad subestiman la incertidumbre en un factor $\approx 9$.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/ols_wild_bootstrap.png}
 \caption{Wild Cluster Bootstrap para OLS log-log con controles: densidad normal teórica aproximada desde estadísticas resumidas (500 iteraciones válidas, 77 clusters, seed=42). NOTA: El NPY certificado no almacena réplicas brutas; la curva es una aproximación normal teórica, no un histograma empírico.}
@@ -1302,7 +1313,7 @@ Wild Cluster Bootstrap IV (ambas etapas) & $-0,9607$ & 0,0281 & $[-1,0141, -0,90
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{figuras/iv_wild_bootstrap.png}
 \caption{Wild Cluster Bootstrap para IV 2SLS, especificación principal con controles (ambas etapas reestimadas): histograma de las 2\,000 réplicas (77 clusters \texttt{center\_id}, seed=42). Media $-0,8410$, DE $0,0504$, IC 95\% percentil $[-0,940, -0,742]$. Análisis de sensibilidad; no valida la exclusión de los instrumentos.}
@@ -1322,7 +1333,7 @@ Se implementaron dos validaciones de robustez de alto impacto que requieren cont
 
 Para evaluar si la elasticidad-precio varía sistemáticamente entre las 145 semanas del panel, se estimó un modelo con efectos fijos de dos vías (entidad = center\_id $\times$ meal\_id, tiempo = semana) e interacción \texttt{log\_checkout\_price $\times$ C(week)}. La hipótesis nula conjunta (Wald test) es que todos los coeficientes de interacción son cero (elasticidad constante en el tiempo).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Test de Wald: interacción tiempo-variante en modelo Panel FE (2 vías).}
 \label{tab:fe_time_varying_wald}
@@ -1339,7 +1350,7 @@ Rechaza H0 (alpha=0,05) & \textbf{Sí} \\
 
 El test \textbf{rechaza rotundamente} la igualdad de elasticidad entre semanas ($p \approx 0$). La elasticidad base (semana de referencia) es $-1,5908$, y la elasticidad marginal por semana varía en el rango \textbf{-1,8756 a -1,2746} (diferencia de 0,60 unidades). Esto sugiere heterogeneidad temporal significativa no capturada en el modelo principal, que asume elasticidad constante en el tiempo.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Elasticidad-precio por semana (efecto marginal = base + interacción).}
 \label{tab:fe_time_varying_elasticidad}
@@ -1489,7 +1500,7 @@ El modelo RCS (Restricted Cubic Splines) en \texttt{log\_checkout\_price} utiliz
 
 \textbf{Interpretación de la base RCS:} La restricción \texttt{constraints='center'} impone que la \textbf{función spline ajustada} (la combinación lineal de las tres bases) sea lineal fuera de los nudos de frontera [P5, P95]; su primera derivada es constante en las colas (precios $\le$ P5 y $\ge$ P95) y su segunda derivada es cero. Las columnas individuales \texttt{rcs\_1}, \texttt{rcs\_2}, \texttt{rcs\_3} \textbf{no deben identificarse} como componentes ``lineal'' y ``no lineales'' separadas; son una base matricial cuyo efecto conjunto produce la forma funcional. Con esta base, \texttt{rcs\_1} por sí sola no es lineal en log-precio, por lo que $H_0: \beta_{\texttt{rcs\_2}} = \beta_{\texttt{rcs\_3}} = 0$ \textbf{no} es una hipótesis de linealidad (en el OLS su Wald vale 15\,323, frente a 3\,607,28 del contraste correcto). La linealidad se contrasta comparando modelos anidados: log-log con controles frente a RCS (2 g.l.).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Coeficientes de la especificación RCS-OLS canónica (3 bases + intercepto + controles), muestra completa.}
 \label{tab:appendix_rcs_coef}
@@ -1520,7 +1531,7 @@ El contraste F anidado entre la especificación lineal y la RCS (2 g.l. num., 45
 
 Tabla extendida con resultados puntuales, errores estándar analíticos e intervalos de confianza al 95\% para cada cuantil. Modelo: log-log con controles (misma especificación principal, \cref{eq:modelo-2}).
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Regresión cuantil completa: elasticidad precio por cuantil con IC analítico al 95\%.}
 \label{tab:appendix_quantile_full}
@@ -1554,7 +1565,7 @@ Detalle completo de la primera y segunda etapa del enfoque de \textit{función d
 \subsubsection{Primera etapa}
 \label{subsubsec:appendix_cf_first}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Primera etapa Control Function: \texttt{log\_checkout\_price} sobre instrumentos + controles.}
 \label{tab:appendix_cf_first}
@@ -1582,7 +1593,7 @@ $R^2 = 0,9767$; F overall $= 9,59 \times 10^5$ (incluye controles; no mide fuerz
 \subsubsection{Segunda etapa con RCS + $\hat{v}$}
 \label{subsubsec:appendix_cf_second}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Segunda etapa CF-RCS canónica: coeficientes puntuales (muestra completa) e inferencia bootstrap agrupada (5\,000 réplicas).}
 \label{tab:cf_second_stage_canonical}
@@ -1615,7 +1626,7 @@ Desde V3.2.5 el Panel C usa la curva evaluada con los \textbf{coeficientes puntu
 \subsection{Test RESET --- Detalle Numérico Extendido}
 \label{subsec:appendix_reset}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Test RESET extendido: coeficientes de potencias de valores ajustados.}
 \label{tab:appendix_reset_detail}
@@ -1641,7 +1652,7 @@ Test conjunto: $F(2, 456\,526) = 153,07$, $p \approx 3.5 \times 10^{-67}$. Ambos
 \subsection{Comparación de Especificaciones: Resumen Numérico}
 \label{subsec:appendix_spec_summary}
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering
 \caption{Resumen comparativo de todas las especificaciones estimadas.}
 \label{tab:appendix_spec_summary}

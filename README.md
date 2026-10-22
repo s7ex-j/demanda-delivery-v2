@@ -6,7 +6,7 @@
 Investigación independiente que estima la elasticidad precio de la demanda en una plataforma de
 entrega de comidas con **456 548 observaciones semana × centro × comida** del conjunto público
 *Food Demand Forecasting* (Genpact / Analytics Vidhya, en Kaggle). Incluye el informe completo en
-LaTeX (`Informe/informe.pdf`, 55 páginas), el código, los notebooks y todos los resultados
+LaTeX (`Informe/informe.pdf`, 49 páginas), el código, los notebooks y todos los resultados
 certificados que cita el informe.
 
 **Autor:** Jharol André Vilca Ramos · [ORCID 0009-0009-7897-3439](https://orcid.org/0009-0009-7897-3439) · Versión 3.3.0
