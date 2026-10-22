@@ -22,6 +22,12 @@ Auditoría completa previa a la publicación. Toda cifra del informe se recalcul
   este estudio corregidas en la tabla comparativa y la Figura 9; se retiró una cifra de
   Christensen (2023) que no figura en la fuente.
 
+### Maquetación del informe
+- Tablas y figuras pasan de posición fija `[H]` a ubicación flotante dentro de su sección: ya no
+  quedan páginas medio vacías (55 → 49 páginas, mismo contenido).
+- Se elimina el estiramiento vertical entre párrafos (`\raggedbottom`) y se reducen los Q-Q plots.
+- Las notas de tabla ya no se superponen a la línea inferior y se alinean a la izquierda.
+
 ### Repositorio
 - Datos excluidos; `scripts/download_data.py` los descarga de Kaggle y verifica SHA-256.
 - Tests que dependen de los datos se omiten automáticamente si no están presentes.
