@@ -1,15 +1,15 @@
-category,elasticidad,recomendacion,especificacion
-Fish,-2.4883,BAJAR,interaccion precio x categoria
-Seafood,-2.4797,BAJAR,interaccion precio x categoria
-Soup,-2.211,BAJAR,interaccion precio x categoria
-Pizza,-1.9537,BAJAR,interaccion precio x categoria
-Sandwich,-1.7592,BAJAR,interaccion precio x categoria
-Starters,-1.4335,BAJAR,interaccion precio x categoria
-Biryani,-1.1312,BAJAR,interaccion precio x categoria
-Rice Bowl,-1.0913,MANTENER,interaccion precio x categoria
-Desert,-0.9037,MANTENER,interaccion precio x categoria
-Beverages,-0.6949,SUBIR,interaccion precio x categoria
-Other Snacks,-0.6682,SUBIR,interaccion precio x categoria
-Extras,-0.6029,SUBIR,interaccion precio x categoria
-Salad,-0.3381,SUBIR,interaccion precio x categoria
-Pasta,-0.2783,SUBIR,interaccion precio x categoria
+category,elasticidad,especificacion,nota
+Fish,-2.4883,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Seafood,-2.4797,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Soup,-2.211,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Pizza,-1.9537,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Sandwich,-1.7592,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Starters,-1.4335,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Biryani,-1.1312,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Rice Bowl,-1.0913,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Desert,-0.9037,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Beverages,-0.6949,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Other Snacks,-0.6682,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Extras,-0.6029,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Salad,-0.3381,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio
+Pasta,-0.2783,OLS log-log con interacción precio x categoría y controles,Asociación observacional; no es una recomendación de precio

@@ -1,292 +1,135 @@
-# Análisis de Elasticidad Precio-Demanda en Delivery de Comidas (v2)
+# Elasticidad precio-demanda en delivery de comidas
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
 
-## 📋 Resumen
+Investigación independiente que estima la elasticidad precio de la demanda en una plataforma de
+entrega de comidas con **456 548 observaciones semana × centro × comida** del conjunto público
+*Food Demand Forecasting* (Genpact / Analytics Vidhya, en Kaggle). Incluye el informe completo en
+LaTeX (`Informe/informe.pdf`, 55 páginas), el código, los notebooks y todos los resultados
+certificados que cita el informe.
 
-Este proyecto estima la **elasticidad precio de la demanda** en una plataforma de *food delivery* utilizando datos transaccionales reales (456,548 observaciones) del dataset público **Food Demand Forecasting** (Kaggle/Genpact). Es la **segunda versión metodológica** (v2) de un estudio previo que utilizó encuesta propia; esta versión reemplaza la fuente por datos transaccionales reales e implementa un pipeline reproducible completo en Python.
-
-**Resultado principal:** Elasticidad = **−0.7513** (IC 95% HC3: [−0.762, −0.741]), inelástica, consistente con la literatura de comida fuera del hogar.
-
-**Informe final:** 39 páginas, compilación LaTeX limpia (apa7.cls, pdflatex → biber → pdflatex×2).
-
----
-
-## 🗂️ Estructura del Repositorio
-
-```
-demanda-delivery-v2/
-├── data/
-│   ├── raw/                          # Datos originales de Kaggle (no versionados)
-│   └── processed/                    # Datos limpios listos para modelado
-│       └── demanda_limpia.csv        # 456,548 filas, 23 columnas
-├── notebooks/                        # Pipeline completo en 10 notebooks
-│   ├── 01_exploracion_inicial.ipynb
-│   ├── 02_limpieza_y_preparacion.ipynb
-│   ├── 03_modelado_elasticidad.ipynb
-│   ├── 03b_panel_efectos_fijos.ipynb
-│   ├── 03c_variables_instrumentales.ipynb
-│   ├── 04_validacion_supuestos.ipynb
-│   ├── 04b_validacion_panel.ipynb
-│   ├── 04c_validacion_iv.ipynb
-│   ├── 05_comparacion_literatura.ipynb
-│   └── 06_sql_bi_extraccion.ipynb
-├── src/                              # Código modular reutilizable
-│   ├── data_prep.py
-│   ├── modeling.py
-│   └── diagnostics.py
-├── sql/                              # Capa SQL + BI
-│   ├── demanda_delivery.db           # SQLite con 456,548 filas
-│   ├── schema.sql
-│   └── queries_negocio.sql
-├── dashboard/
-│   └── data/                         # 6 CSVs para Power BI / Looker Studio
-├── reports/
-│   ├── notebook_outputs/             # Salidas consolidadas por fase
-│   │   ├── 03_modelado_elasticidad.txt
-│   │   ├── 04_validacion_supuestos.txt
-│   │   ├── 05_comparacion_literatura_CONSOLIDADO.txt
-│   │   ├── FASE6_SQL_BI_EXTRACCION.txt
-│   │   ├── PLAN_TECNICO_v2.1_ROBUSTEZ_ALTO_IMPACTO.txt
-│   │   ├── PLAN_TECNICO_v2.1_ROBUSTEZ_MEDIO_ESFUERZO.txt
-│   │   ├── PLAN_TECNICO_v2.1_ITEMS_ROBUSTEZ.txt
-│   │   ├── bootstrap_panel_fe_results.npy
-│   │   ├── bootstrap_quantile_results.npy
-│   │   ├── bootstrap_vhat_results.npy
-│   │   ├── etapa3_concordancia.csv
-│   │   └── etapa3_resultados_completos.json
-│   └── figuras/                      # Gráficos para el informe
-├── Informe/
-│   ├── informe.tex                   # Informe final en LaTeX (apa7.cls)
-│   ├── informe.pdf                   # PDF compilado
-│   └── jaes.bib                      # Bibliografía verificada (14 entradas)
-├── tests/                            # Tests unitarios
-├── bitacora_metodologica.md          # Registro de decisiones metodológicas
-├── requirements.txt
-├── environment.yml
-└── CITATION.cff                      # Metadatos de citación
-```
+**Autor:** Jharol André Vilca Ramos · [ORCID 0009-0009-7897-3439](https://orcid.org/0009-0009-7897-3439) · Versión 3.3.0
 
 ---
 
-## 🚀 Instalación
+## Resultado principal
 
-### Opción A: Conda (recomendado)
-```bash
-conda env create -f environment.yml
-conda activate demanda-delivery
-```
+La elasticidad **no es un parámetro constante**: depende del nivel de precio, la categoría, la
+semana y la fuente de variación que se use para estimarla.
 
-### Opción B: pip
+| Especificación | Elasticidad | Inferencia | Qué representa |
+|---|---|---|---|
+| **OLS log-log con controles (principal)** | **−0,759** | EE agrupado por entidad 0,043; IC 95 % [−0,843; −0,675] | Asociación promedio, inelástica |
+| Panel con efectos fijos de dos vías | −1,5985 | EE agrupado 0,024; pairs bootstrap [−1,651; −1,546] | Variación *within* de cada centro-comida |
+| IV 2SLS (Hausman-Nevo, mismos controles) | −0,841 | EE agrupado por centro 0,050; IC [−0,940; −0,743] | Sensibilidad; no distinguible del OLS |
+| RCS (splines en log-precio) | +0,04 (P5) · −1,44 (P50) · ≈ −1,51 (precio medio) · −1,25 (P95) | Bandas bootstrap por centro | Elasticidad local, no monótona |
+| Función de control (RCS + v̂) | −1,504 en el precio medio | IC bootstrap [−1,630; −1,370] | Casi igual a la RCS-OLS en el mismo punto |
+| Regresión cuantil (τ = 0,1 → 0,9) | −0,67 → −1,01 | EE analíticos | Más elástica donde la demanda es alta |
+
+Tests de especificación: RESET F(2; 456 526) = 153,07; contraste F anidado log-log vs. RCS
+F(2; 456 526) = 3 607,28. El IV y la función de control se presentan como **análisis de
+sensibilidad**: los instrumentos son fuertes (R² parcial de Shea 0,92), pero la exclusión no es
+contrastable y Hansen J solo rechaza con ponderación heterocedástica (33,3), no con ponderación
+agrupada por centro (0,92; p = 0,34). Ninguna estimación debe leerse como efecto causal de una
+política de precios.
+
+---
+
+## Cómo reproducir
+
 ```bash
+git clone https://github.com/s7ex-j/demanda-delivery-v2.git
+cd demanda-delivery-v2
+python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+python scripts/download_data.py      # descarga de Kaggle, verifica SHA-256 y genera data/processed/
+pytest -q                            # 53 tests: reproducen las cifras del informe
 ```
 
-### Dependencias principales
-- Python ≥ 3.11
-- pandas, numpy, scipy, statsmodels, linearmodels
-- matplotlib, seaborn
-- jupyter, nbconvert
-- sqlite3 (stdlib)
+Los datos **no se incluyen** en el repositorio: pertenecen a la competencia original y se
+descargan con la API de Kaggle (credenciales en `~/.kaggle/kaggle.json`) o manualmente en
+`data/raw/` desde [kaggle.com/datasets/kannanaikkal/food-demand-forecasting](https://www.kaggle.com/datasets/kannanaikkal/food-demand-forecasting).
+`download_data.py` comprueba que los archivos coinciden con los usados en el análisis.
+
+| Paso | Comando | Salida |
+|---|---|---|
+| Notebooks (narrativa, en orden 01 → 06) | `jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb` | `reports/notebook_outputs/`, `dashboard/data/` |
+| CSV de dashboard derivados de modelos | `python scripts/analysis/generar_dashboard_modelos.py` | `dashboard/data/` |
+| Diagnósticos IV / función de control | `python scripts/analysis/iv_controles_diagnosticos.py` | `reports/certified/iv_cf_diagnosticos_v325.json` |
+| Figuras del informe | `python scripts/figure_scripts/generar_todas_las_figuras.py` | `Informe/figuras/` |
+| Bootstrap de la función de control (5 000 réplicas) | `python scripts/vm/bootstrap_cf_canonical_replicas.py` | `reports/certified/` |
+| Wild cluster bootstrap del IV (2 000 réplicas) | `python scripts/vm/wild_bootstrap_iv_2sls_controles.py` | `reports/certified/` |
+| Informe | `cd Informe && lualatex informe && biber informe && lualatex informe && lualatex informe` | `Informe/informe.pdf` |
+
+Los notebooks tardan unos 3 minutos en total; los bootstrap de miles de réplicas pueden tardar
+bastante más según la máquina.
+
+Los bootstrap más pesados (pairs bootstrap del panel, bandas RCS, wild bootstrap del OLS,
+jackknife) están en `scripts/analysis/` y sus resultados en `reports/diagnostics/`; los tests y
+las figuras leen esos artefactos sin re-ejecutarlos.
 
 ---
 
-## ▶️ Ejecución del Pipeline
+## Estructura
 
-### Ejecutar notebooks en orden (Jupyter)
-```bash
-jupyter notebook
-# Abrir y ejecutar: 01 → 02 → 03 → 03b → 03c → 04 → 04b → 04c → 05 → 06
+```
+├── Informe/                 informe.tex, jaes.bib, figuras/ e informe.pdf
+├── src/                     data_prep.py, modeling.py, rcs_utils.py, diagnostics.py
+├── notebooks/               01–06: exploración, limpieza, modelos, validación, literatura, SQL/BI
+├── scripts/
+│   ├── download_data.py     datos de Kaggle → data/processed/demanda_limpia.csv
+│   ├── analysis/            diagnósticos y bootstrap (IV, CF, panel, RCS, Hansen J)
+│   ├── vm/                  bootstrap pesados con réplicas guardadas
+│   ├── figure_scripts/      un script por figura del informe
+│   └── runners/             placebo temporal (permutación dentro de entidad)
+├── reports/
+│   ├── certified/           resultados que cita el informe (JSON/NPZ/NPY)
+│   └── diagnostics/         bootstrap, jackknife y tabla maestra de comparación
+├── sql/queries_negocio.sql  vistas SQLite usadas por el notebook 06
+├── dashboard/data/          8 CSV descriptivos para Power BI / Looker Studio
+├── tests/                   53 tests (pytest)
+├── CHANGELOG.md · CITATION.cff · LICENSE
 ```
 
-### Ejecutar todo en batch (nbconvert)
-```bash
-cd notebooks
-for nb in *.ipynb; do
-    jupyter nbconvert --to notebook --execute "$nb" --output "executed_$nb"
-done
-```
-
-### Generar salidas consolidadas
-```bash
-# Desde la raíz del proyecto
-python -m scripts.consolidate_outputs
-```
-
 ---
 
-## 📊 Resultados Principales
+## Limitaciones principales
 
-### Elasticidades estimadas (seis estrategias de identificación + especificaciones flexibles)
+- Datos observacionales agregados, sin fecha calendario ni ceros de demanda (mínimo 13 pedidos).
+- El precio no se asigna aleatoriamente; el panel FE no resuelve simultaneidad y el IV depende de
+  un supuesto de exclusión no contrastable.
+- La elasticidad RCS depende de la elección de nudos y las bandas bootstrap son punto a punto.
+- Un solo dataset y contexto geográfico no especificado.
 
-| Especificación | Elasticidad | Qué corrige | Limitación principal |
-|----------------|-------------|-------------|---------------------|
-| **OLS log-log con controles (Fase 3)** | **−0.7513** | Heterogeneidad observable (categoría, centro, promos) | No corrige endogeneidad ni FE entidad/tiempo |
-| **Panel FE dos vías (Fase 3b)** | **−1.5755** | Heterogeneidad no observada entidad + tendencias temporales | No corrige endogeneidad (simultaneidad) |
-| **Panel FE bootstrap clusterizado (VM)** | **−1.5944** (IC: −1.65, −1.53) | Validación bootstrap del Panel FE (200 iter, 77 centros) | Cómputo pesado → VM offline |
-| **IV 2SLS Hausman-Nevo (Fase 3c)** | **−0.9487** | Simultaneidad precio-demanda | Hansen J rechaza validez conjunta (mitigado por robustez 1-inst: −0.9627) |
-| **Wild cluster bootstrap (VM, 2000 iter)** | **−0.7586** (IC: −0.839, −0.675) | Inferencia con pocos clusters (77 centros, Rademacher 2000 iter) | EE=0.042, consistente con cluster center_id (0.0424) |
-| **RCS Splines log-precio (Fase 3x)** | **Variable** (+0.58 a −3.22) | No-linealidad elástica según nivel de precio | Asume exogeneidad; elasticidad no constante |
-| **Control Function IV-RCS** | **Variable** (R² adj=0.5467) | Endogeneidad + no-linealidad simultánea (Wooldridge 2015) | EE estándar límite inferior; bootstrap v_hat en VM |
-| **Panel FE time-varying (Plan 2.2)** | **−1.57 a −1.85** (base −1.57) | Heterogeneidad temporal (semana × precio) | No corrige endogeneidad; solo within |
-| **Placebo temporal (Plan 2.2)** | **p=1.0** (real −0.748 vs placebo −0.751) | Confusión temporal espuria | No rechaza H0 → evidencia de robustez |
+Detalle completo en la sección "Limitaciones y Trabajo Futuro" del informe.
 
-> **Conclusión:** No hay un único número "verdadero". Cada modelo corrige una amenaza distinta y todos coexisten en el informe con su discusión honesta. El test de Wald (F=10,279, p≈0) **rechaza fuertemente la linealidad log-log** — la elasticidad varía drásticamente con el nivel de precio.
+## Uso de IA
 
-### Modelos adicionales (Plan técnico v2.1)
+Durante el proyecto se usaron asistentes de IA para revisar código, auditar la coherencia entre
+el informe y los resultados, y redactar documentación. Las decisiones metodológicas, la
+verificación de cada fuente bibliográfica contra el original y la interpretación de resultados
+son del autor. En una etapa temprana, una IA generó citas con autores inexistentes; se
+detectaron, se descartaron y la revisión de literatura se reconstruyó verificando cada fuente
+contra el original. Cada resultado del informe se reproduce desde el código de este repositorio
+(ver `tests/`).
 
-| Modelo | Elasticidad / Resultado | Contexto |
-|--------|------------------------|----------|
-| Quantile Regression (τ=0.1) | −0.6523 | Demanda baja: inelástica |
-| Quantile Regression (τ=0.5) | −0.7702 | Mediana: similar a OLS |
-| Quantile Regression (τ=0.9) | −1.0048 | Demanda alta: elástica |
-| Semi-log con controles | −1.0624 (eval. precio medio) | Especificación alternativa |
-| IV just-identified (base_price) | −0.9627 | Robustez 1 instrumento |
+## Citar
 
-### Validación de supuestos (Fases 4, 4b, 4c)
-
-| Test | Modelo | Resultado | Acción |
-|------|--------|-----------|--------|
-| Breusch-Pagan (heterocedasticidad) | OLS Fase 3 | p = 0.0 → **rechaza H₀** | Errores HC3 (SE +15%) |
-| VIF (multicolinealidad) | OLS Fase 3 | Máx 1.204 | ✅ Sin problema |
-| Jarque-Bera (normalidad) | OLS Fase 3 | p = 0.0 (N grande) | TCL OK, Q-Q plot aceptable |
-| Durbin-Watson | OLS Fase 3 | 1.195 | Autocorrelación positiva → abordada en Fase 3b con clustering |
-| Wu-Hausman / Wooldridge (endogeneidad) | OLS vs 2SLS | p ≈ 0 → **rechaza H₀** | IV 2SLS justificado |
-| Hansen J (sobreidentificación) | IV 2SLS | χ² = 320, p ≈ 0 → **rechaza** | Discutido: colinealidad 0.953 + poder excesivo N=456k; robustez 1-inst OK |
-| Clustering ratio (entidad vs HC3) | Panel FE 3b | **7.92x** (0.0236/0.0030) | Clustering NECESARIO y justificado |
-| Shapiro-Wilk (n=5000) | Panel FE 3b | W=0.9837, p<0.001 | Colas pesadas típicas, centro OK |
-| Durbin-Wu-Hausman (endogeneidad) | IV 2SLS | F=3492, p≈0 → **rechaza H₀** | Endogeneidad CONFIRMADA (IV necesario) |
-| Panel FE time-varying Wald | Panel FE 2.2 | χ²(144)=3068.85, p≈0 | Heterogeneidad temporal confirmada |
-| Placebo temporal | Panel FE 2.2 | p=1.0 | Robustez temporal confirmada |
-
-### Robustez adicional (Plan técnico v2.1 - Secciones 2.1, 2.2, 2.3)
-
-| Mejora / Item | Resultado | Impacto |
-|---------------|-----------|---------|
-| **Sección 2.1 (Alto impacto / Bajo esfuerzo)** | | |
-| Quantile Regression (τ=0.1→0.9) | Elast.: -0.65 → -1.00 | ALTO - Heterogeneidad real por cuantil |
-| Precio × Promo Interacción | F=659.73, p≈0 | ALTO - No aditividad significativa |
-| RESET Test | F=119.57, p≈0 | ALTO - Misspecification confirmada |
-| IV Control Function | Exog. F=1,581, No-lin. F=4,815 | ALTO - Doble corrección (endog. + no-lin.) |
-| **Sección 2.2 (Alto impacto / Medio esfuerzo)** | | |
-| Panel FE time-varying | χ²(144)=3068.85, p≈0 | ALTO - Elasticidad varía por semana |
-| Placebo temporal | p=1.0 | ALTO - Robustez temporal confirmada |
-| **Sección 2.3 (Medio impacto / Bajo esfuerzo)** | | |
-| RCS Wald (no-linealidad) | F=10,279, p≈0 | ALTO - Rechaza linealidad log-log |
-| Igualdad elasticidad por categoría | F(13)=519.6, p≈0 | RECHAZADA - Varían de -0.27 a -2.44 |
-| Submuestra ≥50 obs/semana | Δ=+0.0035 | MÍNIMO - Robusto a items esporádicos |
-| Sensibilidad top/bottom 1% precio | Δ=-0.0523 | RELEVANTE (7%) - Outliers afectan |
-| HC3 vs Cluster vs Bootstrap | Ratio 7.92x | Cluster >> HC3 (dependencia intra-entidad) |
-
-### Traducción a negocio (Fase 6)
-
-| Pregunta | Respuesta (elasticidad −0.75) |
-|----------|-------------------------------|
-| **Subir precio 5% → ingreso** | +1.06% (demanda cae ~3.75%) ✅ |
-| **Bajar precio 5% → ingreso** | −1.44% (demanda sube ~3.75%) ❌ |
-| **Promociones vs precio** | Emailer +65%, Homepage +91% > efecto precio |
-| **Pricing general (plataforma)** | OLS −0.75 o 2SLS −0.95 → inelástica |
-| **Pricing granular (ítem)** | Panel FE −1.58 → más sensible |
-
----
-
-## 📚 Literatura Verificada (Fase 5)
-
-**12 fuentes externas verificadas contra fuente primaria + el estudio propio (13 en total)**, agrupadas en 3 categorías:
-
-| Grupo | Fuentes | Descripción |
-|-------|---------|-------------|
-| **A: Comparación directa (comida/delivery)** | 4 externas + este estudio (5) | Andreyeva et al. 2010 (meta-análisis), Damayanti et al. 2023 (Indonesia), Bumagat & Ibana 2025 (pico/no pico), Li & Wang 2025 (contexto), **Este estudio** |
-| **B: Contextual (on-demand/e-commerce)** | 4 | Christensen & Osman 2021/2023 (Uber El Cairo), Zhang & Demirkan 2021 (CPG online), Sriwongphanawes & Fukuda 2024 (Uber Japón) |
-| **C: Soporte metodológico/mercado** | 4 | Statista 2024, Kahneman et al. 1991, Davidson 1994, Long & Ervin 2000 |
-
-*Nota: Zhang & Demirkan 2021 y Sriwongphanawes & Fukuda 2024 están incluidos en el Grupo B tras verificación (ver `jaes.bib`).*
-
----
-
-## 🗺️ Plan Técnico de Mejoras (v2.1)
-
-Se ha documentado un **Plan técnico de mejoras.md** con análisis de viabilidad para una futura versión 2.1 del estudio, incluyendo:
-
-- **Prioridad alta (viables ya)**: Splines RCS en log-precio (test de no-linealidad), Quantile Regression (τ=0.1, 0.25, 0.5, 0.75, 0.9), Interacción Precio × Promoción
-- **Prioridad media (condicional)**: IV no-lineal vía control function (si splines rechaza linealidad)
-- **Descartados**: AIDS/LA-AIDS/EASI (datos incompatibles - no son datos de canasta), Modelo dinámico con lags (sesgo de Nickell severo en panel desbalanceado con Min Obs=1)
-
-Ver `Plan técnico de mejoras.md` para el roadmap completo, código de ejemplo y justificación técnica detallada.
-
----
-
-## 🖥️ Scripts VM para cómputos pesados
-
-Los siguientes scripts ejecutan bootstrap pesados en VM offline (GPU dedicado + 32GB RAM):
-
-| Script | Iteraciones | Descripción |
-|--------|-------------|-------------|
-| `scripts/vm_computaciones_pesadas.py` | 5×1000 + 200 | Quantile Regression (5 cuantiles) + Panel FE bootstrap clusterizado |
-| `scripts/vm_bootstrap_vhat.py` | 500 | Control Function v_hat bootstrap (Wooldridge 2015 §6.3.3) |
-| `scripts/vm_wild_bootstrap.py` | 2000 | Wild cluster bootstrap (Rademacher, 77 centros) ✅ COMPLETADO |
-
-Resultados se guardan en `reports/notebook_outputs/*.npy` y se cargan en notebooks para trazabilidad.
-
----
-
-## 📄 Informe Final
-
-El informe completo está en `Informe/informe.tex` (clase `apa7.cls`, una columna). Para compilar:
-
-```bash
-cd Informe
-latexmk -pdf informe.tex
-# Requiere: texlive (apa7, biblatex, biber, etc.)
-```
-
-PDF generado: `Informe/informe.pdf`
-
----
-
-## 🔬 Reproducibilidad
-
-- **Pipeline completo**: 10 notebooks ejecutables en orden
-- **Datos**: Kaggle/Genpact Food Demand Forecasting (enlace en `jaes.bib`)
-- **Semillas fijas**: bootstrap (seed=42), todos los modelos
-- **Salidas**: CSVs, SQLite, figuras, reportes TXT consolidados
-- **Bibliografía**: 14 entradas en `jaes.bib` verificadas manualmente
-
----
-
-## 📝 Citar este trabajo
+Ver [`CITATION.cff`](CITATION.cff).
 
 ```bibtex
-@misc{vilca2026elasticidad,
-  author       = {Vilca Ramos, Jharol André},
-  title        = {Elasticidad Precio-Demanda en el Servicio de Delivery de Comidas: Evidencia desde Datos Transaccionales (v2)},
-  year         = {2026},
-  howpublished = {\url{https://github.com/usuario/demanda-delivery-v2}},
-  note         = {Dataset: Kaggle/Genpact Food Demand Forecasting; 456,548 observaciones; Pipeline reproducible en Python}
+@misc{vilcaramos2026elasticidad,
+  author = {Vilca Ramos, Jharol André},
+  title  = {Elasticidad precio-demanda en el servicio de delivery de comidas: evidencia desde datos transaccionales},
+  year   = {2026},
+  note   = {Versión 3.3.0},
+  url    = {https://github.com/s7ex-j/demanda-delivery-v2}
 }
 ```
 
-Ver `CITATION.cff` para metadatos completos (incluye DOI de Zenodo al publicar).
+## Licencia
 
----
-
-## ⚖️ Licencia
-
-MIT License — ver `LICENSE` (por agregar).
-
----
-
-## 🙏 Agradecimientos
-
-- Genpact / Analytics Vidhya por el dataset público en Kaggle
-- Comunidad de econometría aplicada por referencias metodológicas
-- Revisores que identificaron errores en la versión v1 (encuesta propia)
-
----
-
-## 📧 Contacto
-
-**Jharol André Vilca Ramos** — Estudiante de Ingeniería Industrial y Ciencia de Datos  
-ORCID: [0009-0009-7897-3439](https://orcid.org/0009-0009-7897-3439)
+Código y documentación bajo licencia MIT ([`LICENSE`](LICENSE)). Los datos de Kaggle no se
+redistribuyen y se rigen por los términos de su fuente original.

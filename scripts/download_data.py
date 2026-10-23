@@ -1,112 +1,60 @@
+#!/usr/bin/env python3
 """
-Descarga el dataset completo "Food Demand Forecasting" desde Kaggle
-y lo deja listo en data/raw/.
+Descarga los datos de Kaggle, verifica su integridad y genera data/processed/demanda_limpia.csv.
 
-Requisitos previos:
-    1. Cuenta de Kaggle (gratis).
-    2. Token de API descargado desde https://www.kaggle.com/settings
-       (botón "Create New Token" -> descarga kaggle.json).
-    3. Colocar kaggle.json en:
-         - Linux/Mac: ~/.kaggle/kaggle.json
-         - Windows:   C:\\Users\\<tu_usuario>\\.kaggle\\kaggle.json
-    4. pip install kaggle (ya incluido en environment.yml / requirements.txt)
+Los datos NO se redistribuyen en este repositorio (pertenecen a la competencia
+Genpact / Analytics Vidhya "Food Demand Forecasting", publicada en Kaggle).
+
+Requisitos: cuenta de Kaggle y credenciales de la API (~/.kaggle/kaggle.json) o
+descarga manual de los CSV en data/raw/.
 
 Uso:
-    python scripts/download_data.py
-
-Resultado esperado en data/raw/:
-    train.csv
-    fulfilment_center_info.csv
-    meal_info.csv
+    python scripts/download_data.py            # descarga (si falta), verifica y procesa
+    python scripts/download_data.py --no-download
 """
-
-import shutil
+import argparse
+import hashlib
+import subprocess
 import sys
-import zipfile
 from pathlib import Path
 
-DATASET_SLUG = "kannanaikkal/food-demand-forecasting"
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-RAW_DIR = PROJECT_ROOT / "data" / "raw"
-
-EXPECTED_FILES = {
-    "train.csv",
-    "fulfilment_center_info.csv",
-    "meal_info.csv",
+ROOT = Path(__file__).resolve().parents[1]
+RAW = ROOT / "data" / "raw"
+PROCESSED = ROOT / "data" / "processed" / "demanda_limpia.csv"
+DATASET = "kannanaikkal/food-demand-forecasting"
+SHA256 = {  # archivos exactos usados en el análisis
+    "train.csv": "a2ed2d7c6905d63a9361d8dd35bc06c8a597831f7185644e0f33ad7bfe20cc81",
+    "meal_info.csv": "9d8045af391c492f531c928d7f3d58581c80d0594776d1f4e53c8b29bbff8f75",
+    "fulfilment_center_info.csv": "c874f74fa392b2c4dd24a167f32a5bee68a444b8bf151acf295cd5d66aa0517f",
 }
 
 
-def check_kaggle_credentials() -> None:
-    """Verifica que exista el token de Kaggle antes de intentar descargar."""
-    kaggle_json_locations = [
-        Path.home() / ".kaggle" / "kaggle.json",
-        Path.home() / "AppData" / "Roaming" / "kaggle" / "kaggle.json",  # Windows alt
-    ]
-    if not any(p.exists() for p in kaggle_json_locations):
-        sys.exit(
-            "No se encontró kaggle.json. Descárgalo desde "
-            "https://www.kaggle.com/settings (Create New Token) y colócalo en "
-            "~/.kaggle/kaggle.json antes de correr este script."
-        )
+def sha256(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def download_dataset() -> None:
-    """Descarga y descomprime el dataset completo en data/raw/."""
-    # Import diferido: si kaggle no está instalado, el mensaje de check_kaggle_credentials
-    # o el ImportError son más claros que un fallo silencioso al importar arriba del archivo.
-    from kaggle.api.kaggle_api_extended import KaggleApi
-
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
-
-    api = KaggleApi()
-    api.authenticate()
-
-    print(f"Descargando dataset '{DATASET_SLUG}' en {RAW_DIR} ...")
-    api.dataset_download_files(DATASET_SLUG, path=str(RAW_DIR), unzip=False)
-
-    # El archivo descargado tiene el nombre del último segmento del slug + .zip
-    zip_name = DATASET_SLUG.split("/")[-1] + ".zip"
-    zip_path = RAW_DIR / zip_name
-
-    if not zip_path.exists():
-        # A veces Kaggle nombra el zip distinto; buscamos cualquier .zip nuevo en RAW_DIR
-        zips = list(RAW_DIR.glob("*.zip"))
-        if not zips:
-            sys.exit("La descarga no generó ningún archivo .zip. Revisa tus credenciales de Kaggle.")
-        zip_path = zips[0]
-
-    print(f"Descomprimiendo {zip_path.name} ...")
-    with zipfile.ZipFile(zip_path, "r") as zf:
-        zf.extractall(RAW_DIR)
-
-    zip_path.unlink()  # limpiar el zip después de extraer
-
-    _flatten_nested_dirs()
-    _verify_files()
-
-
-def _flatten_nested_dirs() -> None:
-    """Algunos datasets de Kaggle extraen en una subcarpeta; la aplanamos si aplica."""
-    subdirs = [p for p in RAW_DIR.iterdir() if p.is_dir()]
-    for sub in subdirs:
-        for f in sub.iterdir():
-            shutil.move(str(f), str(RAW_DIR / f.name))
-        sub.rmdir()
-
-
-def _verify_files() -> None:
-    present = {p.name for p in RAW_DIR.glob("*.csv")}
-    missing = EXPECTED_FILES - present
-    if missing:
-        print(f"Advertencia: no se encontraron estos archivos esperados: {missing}")
-        print(f"Archivos presentes en data/raw/: {sorted(present)}")
-    else:
-        print("Descarga completa. Archivos verificados en data/raw/:")
-        for f in sorted(present):
-            size_mb = (RAW_DIR / f).stat().st_size / (1024 * 1024)
-            print(f"  - {f} ({size_mb:.2f} MB)")
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--no-download", action="store_true")
+    a = ap.parse_args()
+    RAW.mkdir(parents=True, exist_ok=True)
+    missing = [f for f in SHA256 if not (RAW / f).exists()]
+    if missing and not a.no_download:
+        print(f"Descargando {DATASET} con la API de Kaggle...")
+        subprocess.run(["kaggle", "datasets", "download", "-d", DATASET, "-p", str(RAW), "--unzip"], check=True)
+    for f, h in SHA256.items():
+        p = RAW / f
+        if not p.exists():
+            sys.exit(f"Falta {p}. Descárgalo manualmente desde https://www.kaggle.com/datasets/{DATASET}")
+        status = "OK" if sha256(p) == h else "DISTINTO (otra versión del dataset; los resultados pueden variar)"
+        print(f"{f}: {status}")
+    sys.path.insert(0, str(ROOT / "src"))
+    from data_prep import pipeline_completo
+    df = pipeline_completo(str(RAW))
+    PROCESSED.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(PROCESSED, index=False)
+    print(f"Generado {PROCESSED.relative_to(ROOT)}: {df.shape[0]:,} filas x {df.shape[1]} columnas")
 
 
 if __name__ == "__main__":
-    check_kaggle_credentials()
-    download_dataset()
+    main()

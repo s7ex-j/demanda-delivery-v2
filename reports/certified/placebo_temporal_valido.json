@@ -1,0 +1,31 @@
+{
+  "provenance": {
+    "script": "src/modeling.py",
+    "function": "placebo_temporal_valido",
+    "script_sha256": "7e4863c534b7212042547b65466168595bb4211af7052fc0df04ab4c725cad08",
+    "dataset": "data\\processed\\demanda_limpia.csv",
+    "dataset_sha256": "90d41670226e961b3eb3ceb6b5b312575082280198a6898b3b1f1bccf5a4707e"
+  },
+  "parameters": {
+    "n_iteraciones": 500,
+    "seed": 42,
+    "n_obs": 456548
+  },
+  "results": {
+    "elasticidad_real": -1.5963938223921745,
+    "media_placebo": -0.00046413602143295505,
+    "std_placebo": 0.006214788992214368,
+    "p_valor": 0.0,
+    "rechaza_H0_05": true,
+    "n_iteraciones_validas": 500,
+    "tipo": "permutación_precio_dentro_entidad",
+    "nota_metodologica": "Placebo VÁLIDO - rompe alineación temporal precio-demanda dentro de cada entidad"
+  },
+  "validation": {
+    "exactamente_500_replicas": true,
+    "sin_nan": true,
+    "seed_42": true,
+    "funcion_exacta": "placebo_temporal_valido",
+    "dataset_exacto": "data/processed/demanda_limpia.csv"
+  }
+}

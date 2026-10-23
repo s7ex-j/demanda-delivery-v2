@@ -1,0 +1,151 @@
+{
+ "version": "3.2.5",
+ "n_total": 456548,
+ "n_iv": 456544,
+ "iv_principal": {
+  "coef": -0.8413792355003693,
+  "ee_robusto": 0.0055631508063730935,
+  "ee_cluster_center": 0.05022414205268631,
+  "ic95_cluster": [
+   -0.939816745078058,
+   -0.7429417259226806
+  ],
+  "emailer": 0.4928306637445701,
+  "homepage": 0.6457837673243532,
+  "hubo_aumento": 0.0017044909631529492,
+  "ee_emailer": 0.005240493483672248,
+  "ee_homepage": 0.00462615026272774,
+  "wu_hausman_F": 3715.149428622614,
+  "wu_hausman_p": 0.0,
+  "wooldridge_score": 1785.80873673514,
+  "wooldridge_p": 0.0,
+  "linearmodels_first_stage": {
+   "rsquared": 0.9767481053729373,
+   "partial.rsquared": 0.9225621286238963,
+   "shea.rsquared": 0.9225621286238215,
+   "f.stat": 2860150.8223541807,
+   "f.pval": 0.0
+  },
+  "hansen_J": 33.28006351814253,
+  "hansen_J_p": 7.979652762856991e-09
+ },
+ "iv_just_id_base": {
+  "coef": -0.8544578063666677,
+  "ee_robusto": 0.005797367983914009,
+  "ee_cluster_center": 0.04749638172402614
+ },
+ "iv_sin_controles_referencia": {
+  "coef": -0.9604407533796575,
+  "ee_robusto": 0.0032474981747341995,
+  "hansen_J": 324.49330167291015
+ },
+ "primera_etapa": {
+  "R2": 0.976748105372937,
+  "F_overall": 958863.7452153559,
+  "F_conjunto_homoc": 2719411.207729392,
+  "F_conjunto_HC1": 1430009.6308468715,
+  "F_conjunto_cluster_center": 218018.5432693458,
+  "R2_parcial_Shea": 0.9225621286238963,
+  "R2_parcial_unico_otros_centros": 0.6064936603212037,
+  "R2_parcial_unico_base_price": 0.16747359188357425,
+  "F_unico_otros_centros": 703618.4106127025,
+  "F_unico_base_price": 91835.58124053279,
+  "coef_base_price": 0.27975423963803403,
+  "ee_base_price": 0.0009231476902358523,
+  "coef_otros_centros": 0.7559606228838656,
+  "ee_otros_centros": 0.0009012194933561944,
+  "intercepto": -0.21585203676165152,
+  "ee_intercepto": 0.0024055789960386177,
+  "stock_yogo_tamano_10pct_K2_2": 19.93
+ },
+ "cf_puntual": {
+  "coef": {
+   "Intercept": 4.707286835822132,
+   "rcs_1": -0.03674458820267958,
+   "rcs_2": -0.4032705998012673,
+   "rcs_3": -1.197142137412546,
+   "v_hat": 1.000188675267769
+  },
+  "ee_convencional": {
+   "Intercept": 0.00350792404102719,
+   "rcs_1": 0.0034600637363783574,
+   "rcs_2": 0.0032498227924018953,
+   "rcs_3": 0.008404035130005396,
+   "v_hat": 0.01774225277861763
+  },
+  "ee_hc3": {
+   "Intercept": 0.003934149140687195,
+   "rcs_1": 0.0040316369996325615,
+   "rcs_2": 0.0036509668029446286,
+   "rcs_3": 0.008253308229501547,
+   "v_hat": 0.021287209472652804
+  },
+  "p_convencional": {
+   "rcs_1": 2.4324051469858509e-26,
+   "rcs_2": 0.0,
+   "rcs_3": 0.0,
+   "v_hat": 0.0
+  },
+  "F_exogeneidad": 3177.9447378409714,
+  "F_wald_rcs2_rcs3": 17025.76892856102,
+  "F_anidado_no_linealidad": 3335.4132157241233,
+  "gl_anidado": [
+   2,
+   456521.0
+  ],
+  "coef_lineal_equivalente_2SLS": -0.8413792355003892,
+  "R2_adj": 0.5411881995497065,
+  "precio_medio": 332.2405662104857,
+  "precio_mediana": 296.82,
+  "elasticidad_media": -1.5040610103223586,
+  "elasticidad_mediana": -1.394512451205389,
+  "rcs_ols_misma_muestra_media": -1.5119809229334027,
+  "rcs_ols_misma_muestra_mediana": -1.4430985527277878,
+  "nudos_precio": [
+   121.27999999999999,
+   260.02000000000004,
+   349.2599999999999,
+   640.2300000000002
+  ]
+ },
+ "rcs_ols_rango_P5_P95": {
+  "min": -1.5126586321986157,
+  "precio_min": 328.5435382035784
+ },
+ "ols_principal": {
+  "Intercept": 9.097659193896998,
+  "C(category)[T.Biryani]": -1.2626650630843312,
+  "C(category)[T.Desert]": -0.7008896763578525,
+  "C(category)[T.Extras]": 0.16314689083751321,
+  "C(category)[T.Fish]": -0.26399309202275384,
+  "C(category)[T.Other Snacks]": -0.35927421526128467,
+  "C(category)[T.Pasta]": -0.9400416148558693,
+  "C(category)[T.Pizza]": 0.4834519919983502,
+  "C(category)[T.Rice Bowl]": 1.258700974276442,
+  "C(category)[T.Salad]": 0.8424981826344349,
+  "C(category)[T.Sandwich]": 0.9699780486864867,
+  "C(category)[T.Seafood]": -0.3536786954493907,
+  "C(category)[T.Soup]": -0.9328875523126278,
+  "C(category)[T.Starters]": -0.22973216111698755,
+  "C(center_type)[T.TYPE_B]": 0.28443238340322236,
+  "C(center_type)[T.TYPE_C]": -0.3582583957035575,
+  "log_checkout_price": -0.7589595446212893,
+  "emailer_for_promotion": 0.5070930471887108,
+  "homepage_featured": 0.6543794961663146,
+  "hubo_aumento": -0.0027140014900376708
+ },
+ "interaccion": {
+  "log_checkout_price_c": -0.7481239721795425,
+  "emailer_for_promotion": 0.5308929393011054,
+  "homepage_featured": 0.6228223379619364,
+  "log_checkout_price_c:emailer_for_promotion": 0.3283770070586758,
+  "log_checkout_price_c:homepage_featured": -0.2203616796921123,
+  "F": 652.2799256385725,
+  "gl": [
+   2.0,
+   456526.0
+  ],
+  "p": 1.325586837846267e-283
+ },
+ "wald_categoria_p_log10": -Infinity
+}

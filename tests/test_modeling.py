@@ -14,6 +14,7 @@ from modeling import (
     modelo_semilog,
     bootstrap_elasticidad,
     tabla_comparacion_modelos,
+    modelo_panel_efectos_fijos,
 )
 
 
@@ -33,7 +34,7 @@ def crear_dataset_prueba(n=1000, semilla=42):
     log_orders = 8.0 - 0.8 * log_price + rng.normal(0, 0.5, size=n)
     df['num_orders'] = np.exp(log_orders) - 1
     df['log_checkout_price'] = log_price
-    df['log_num_orders'] = np.log1p(df['num_orders'])
+    df['log_num_orders'] = np.log(df['num_orders'])
     df['variacion_precio'] = df['base_price'] - df['checkout_price']
     df['variacion_precio_pct'] = (df['variacion_precio'] / df['base_price']) * 100
     df['hubo_aumento'] = (df['variacion_precio'] < 0).astype(int)
@@ -125,6 +126,28 @@ class TestTablaComparacionModelos:
         assert 'bic' in tabla.columns
         assert 'r2_ajustado' in tabla.columns
         assert 'n_observaciones' in tabla.columns
+
+
+class TestModeloPanelEfectosFijos:
+    """Tests para el modelo Panel FE (requiere linearmodels)."""
+
+    def test_import_panelols(self):
+        """Verifica que linearmodels.PanelOLS puede importarse."""
+        from linearmodels import PanelOLS
+        assert PanelOLS is not None
+
+    def test_modelo_ajusta(self):
+        """Verifica que el modelo Panel FE se ajusta sin error (requiere linearmodels)."""
+        # Usamos datos reales mínimos para probar
+        import pandas as pd
+        import numpy as np
+        df = pd.read_csv('data/processed/demanda_limpia.csv')
+        # Tomar una muestra pequeña para test rápido
+        df_sample = df.sample(n=min(5000, len(df)), random_state=42)
+        modelo = modelo_panel_efectos_fijos(df_sample)
+        assert hasattr(modelo, 'params')
+        assert 'log_checkout_price' in modelo.params.index
+        assert modelo.params['log_checkout_price'] < 0
 
 
 if __name__ == '__main__':

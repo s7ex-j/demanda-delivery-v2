@@ -1,0 +1,11 @@
+{
+  "elasticidad_real": -0.7589595446213134,
+  "media_placebo": -0.4276012375710146,
+  "std_placebo": 0.0017112386622535807,
+  "p_valor_empirico": 0.0,
+  "n_iteraciones_validas": 500,
+  "n_iteraciones_total": 500,
+  "block_weeks": 4,
+  "seed": 42,
+  "nota": "Permutación de bloques de 4 semanas dentro de cada entidad center_id x meal_id; preserva autocorrelación local del precio y rompe su alineación temporal con la demanda."
+}

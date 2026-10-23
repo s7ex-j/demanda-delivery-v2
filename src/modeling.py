@@ -8,11 +8,21 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
-from patsy import dmatrix
+from patsy import dmatrix, build_design_matrices
+from scipy.stats import f as _f_dist
 
 # PROJECT_ROOT para cargar archivos .npy desde reports/notebook_outputs
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
+
+# Importar utilidades RCS canónicas
+from rcs_utils import (
+    build_canonical_rcs_design,
+    apply_rcs_design,
+    first_stage_formula,
+    second_stage_formula,
+    construir_instrumentos as construir_instrumentos_canonico,
+)
 
 
 def modelo_log_log_base(df: pd.DataFrame):
@@ -216,13 +226,17 @@ def modelo_iv_2sls(df: pd.DataFrame):
     Requiere que el DataFrame ya tenga las columnas de instrumentos
     (correr construir_instrumentos() antes) y que se excluyan las filas
     con NaN en el instrumento (comida-semana sin "otros centros").
+
+    ESPECIFICACIÓN ARMONIZADA: incluye los mismos controles que otros modelos
+    (hubo_aumento, C(category), C(center_type)) para comparabilidad.
     """
     from linearmodels.iv import IV2SLS
 
     df_iv = df.dropna(subset=['log_precio_prom_otros_centros']).copy()
 
     formula = (
-        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured '
+        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured + hubo_aumento '
+        '+ C(category) + C(center_type) '
         '+ [log_checkout_price ~ log_base_price + log_precio_prom_otros_centros]'
     )
     modelo = IV2SLS.from_formula(formula, data=df_iv)
@@ -242,7 +256,8 @@ def test_sobreidentificacion_hansen_j(df_iv: pd.DataFrame):
     from linearmodels.iv import IVGMM
 
     formula = (
-        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured '
+        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured + hubo_aumento '
+        '+ C(category) + C(center_type) '
         '+ [log_checkout_price ~ log_base_price + log_precio_prom_otros_centros]'
     )
     modelo = IVGMM.from_formula(formula, data=df_iv)
@@ -267,7 +282,8 @@ def modelo_iv_justamente_identificado(df: pd.DataFrame, instrumento: str = 'log_
     df_iv = df.dropna(subset=[instrumento]).copy()
 
     formula = (
-        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured '
+        'log_num_orders ~ 1 + emailer_for_promotion + homepage_featured + hubo_aumento '
+        '+ C(category) + C(center_type) '
         f'+ [log_checkout_price ~ {instrumento}]'
     )
     modelo = IV2SLS.from_formula(formula, data=df_iv)
@@ -283,8 +299,19 @@ def modelo_log_log_rcs(df: pd.DataFrame, df_splines: int = 4,
                        percentiles: tuple = (5, 35, 65, 95)):
     """Modelo log-log con Restricted Cubic Splines (RCS) en log_checkout_price.
 
-    Usa `patsy.dmatrix` con `cr()` para construir la base de splines cúbicos
-    restringidos con nudos en los percentiles indicados de log_checkout_price.
+    USO HISTÓRICO — DEPRECADO PARA NUEVOS ANÁLISIS.
+
+    Esta implementación usa `patsy.dmatrix` con `cr(..., df=4, constraints='center')`
+    que genera 5 bases (rcs_0..rcs_4) con intercepto redundante. NO es la
+    especificación canónica utilizada en el paper final.
+
+    Para análisis nuevos, usar la especificación canónica en `src/rcs_utils.py`:
+    - `build_canonical_rcs_design()` — compila design_info con nudos fijos P5/P35/P65/P95
+    - `apply_rcs_design()` — aplica la base a nuevos datos usando design_info precompilado
+    - `first_stage_formula()` / `second_stage_formula()` — fórmulas canónicas
+    - Genera exactamente 3 bases: rcs_1, rcs_2, rcs_3 (base cr centrada; ninguna columna es lineal por sí sola) + intercepto explícito
+    - Nudos fijados en muestra completa; bootstrap usa `build_design_matrices` con design_info fijo
+    - v_hat se extrae por nombre (`params.get('v_hat')`), no por posición
 
     Args:
         df: DataFrame con las variables
@@ -293,7 +320,20 @@ def modelo_log_log_rcs(df: pd.DataFrame, df_splines: int = 4,
 
     Returns:
         Tupla (modelo_ajustado, matriz_diseno_splines, percentiles_usados)
+
+    .. warning::
+        Esta función se mantiene SOLO para reproducibilidad histórica.
+        Los resultados del paper usan la especificación canónica (CF/RCS con bootstrap).
+        Los coeficientes de esta función histórica (ej. rcs_1=1.2221, rcs_2=0.8049)
+        NO aparecen en el paper final ni son reproducibles via bootstrap certificado.
     """
+    import warnings
+    warnings.warn(
+        "modelo_log_log_rcs es HISTÓRICA y DEPRECADA. "
+        "Usar build_canonical_rcs_design/apply_rcs_design de rcs_utils.py para especificación canónica.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     # Percentiles de los nudos en log_checkout_price
     log_price = df['log_checkout_price']
     nudos = np.percentile(log_price, percentiles)
@@ -549,8 +589,17 @@ def modelo_interaccion_precio_promo(df: pd.DataFrame):
     }, float(mean_log_price)
 
 
-def modelo_iv_control_function(df: pd.DataFrame):
-    """IV no-lineal vía Control Function approach (Wooldridge 2015).
+def modelo_iv_control_function_historico(df: pd.DataFrame):
+    """IV no-lineal vía Control Function approach (Wooldridge 2015) — ESPECIFICACIÓN HISTÓRICA.
+
+    NOTA: Esta implementación usa la especificación histórica (pre-canónica) con:
+    - 4 bases RCS (rcs_0, rcs_1, rcs_2, rcs_3) + intercepto implícito OLS
+    - Nudos recalculados por muestra (no fijados en muestra completa)
+    - Extracción posicional de v_hat (fuente del off-by-one error en B2)
+    - v_hat puntual ~0.7139 (vs 0.9937 canónico bootstrap)
+
+    MANTENIDA PARA COMPATIBILIDAD HISTÓRICA Y REPRODUCIBILIDAD.
+    NO USA PARA NUEVOS ANÁLISIS — usar modelo_iv_control_function() (canónico).
 
     Enfoque en dos etapas:
     1. Primera etapa: log_checkout_price ~ instrumentos + controles → obtener residuos v_hat
@@ -574,7 +623,7 @@ def modelo_iv_control_function(df: pd.DataFrame):
     fs_model = smf.ols(formula_fs, data=df_iv).fit()
     df_iv['v_hat'] = fs_model.resid
 
-    # Segunda etapa: modelo con RCS + v_hat
+    # Segunda etapa: modelo con RCS histórico + v_hat
     modelo_rcs, spline_design, nudos = modelo_log_log_rcs(df_iv)
     # Extraer coeficientes de spline y v_hat del modelo RCS
     # (el modelo RCS ya incluye v_hat si lo pasamos en el df)
@@ -619,13 +668,154 @@ def modelo_iv_control_function(df: pd.DataFrame):
     f_nl = float(wald_nl.fvalue.item()) if hasattr(wald_nl.fvalue, 'item') else float(wald_nl.fvalue)
     p_nl = float(wald_nl.pvalue.item()) if hasattr(wald_nl.pvalue, 'item') else float(wald_nl.pvalue)
 
+    # Elasticidad puntual en precio medio (usando la curva RCS + v_hat)
+    # La elasticidad es la derivada de los splines evaluada en el precio medio
+    precio_medio = df_iv['checkout_price'].mean()
+    elasticidad_p50 = elasticidad_puntual_rcs(ss_model, spline_design, nudos, np.array([precio_medio]))[0]
+
     return {
         'primera_etapa': fs_model,
         'segunda_etapa': ss_model,
         'test_exogeneidad': {'F': f_exog, 'p': p_exog, 'rechaza_H0_05': rechaza_exog},
         'test_no_linealidad_condicional': {'F': f_nl, 'p': p_nl, 'rechaza_H0_05': p_nl < 0.05},
         'nudos': nudos,
+        'elasticidad_p50': float(elasticidad_p50),
+        'v_hat_coef': float(ss_model.params.get('v_hat', np.nan)),
+        'v_hat_ee': float(ss_model.bse.get('v_hat', np.nan)),
+        '_especificacion': 'historica_4_bases_rcs',
     }
+
+
+def modelo_iv_control_function(df: pd.DataFrame):
+    """IV no-lineal vía Control Function approach (Wooldridge 2015) — ESPECIFICACIÓN CANÓNICA.
+
+    Esta implementación corresponde a la especificación certificada en:
+    - bootstrap_vhat_canonical.json/.npy (5000 iter, cluster bootstrap by center_id)
+    - Paper (Informe/informe.tex, V3.2.5): v_hat=1.0002 (puntual), F_exog=3177.9 (t^2), F_nonlin anidado=3335.4,
+      elasticidad=-1.5041 (precio medio), -1.3945 (mediana)
+    - cf_elasticidad_curve.npy (curva elástica canónica)
+
+    ESPECIFICACIÓN CANÓNICA:
+    - RCS: 3 bases explícitas (rcs_1, rcs_2, rcs_3), constraints='center', -1 (sin rcs_0)
+    - Intercepto EXPLÍCITO en segunda etapa (+ 1 en fórmula)
+    - Nudos FIJOS: P5, P35, P65, P95 de log_checkout_price (muestra completa)
+    - design_info RCS pre-compilado (build_canonical_rcs_design) — NO recalcula por réplica
+    - v_hat extraído POR NOMBRE (params.get('v_hat')), NO posicional
+    - Primera etapa idéntica a histórica (2 instrumentos Hausman-Nevo)
+
+    Returns:
+        Dict con resultados de primera y segunda etapa, tests
+    """
+    # Preparar datos con instrumentos
+    df_iv = construir_instrumentos_canonico(df).dropna(subset=['log_precio_prom_otros_centros']).copy()
+
+    # PRIMERA ETAPA — fórmula canónica (idéntica a histórica)
+    fs_model = smf.ols(first_stage_formula(), data=df_iv).fit()
+    df_iv['v_hat'] = fs_model.resid
+
+    # RCS CANÓNICO: design_info FIJO en muestra completa
+    log_price_full = df_iv['log_checkout_price'].to_numpy()
+    design_info, knots = build_canonical_rcs_design(log_price_full)
+
+    # Aplicar RCS canónico a la muestra
+    S = apply_rcs_design(design_info, log_price_full)
+    for c in S.columns:
+        df_iv[c] = S[c].to_numpy()
+
+    # SEGUNDA ETAPA — fórmula canónica con intercepto explícito + 3 RCS + v_hat
+    ss_model = smf.ols(second_stage_formula(), data=df_iv).fit()
+
+    # Tests
+    param_names_ss = list(ss_model.params.index)
+
+    # 1. Test exogeneidad: H0: coef(v_hat) = 0 (1 g.l.)
+    R_exog = np.zeros((1, len(ss_model.params)))
+    if 'v_hat' in param_names_ss:
+        R_exog[0, param_names_ss.index('v_hat')] = 1
+        wald_exog = ss_model.wald_test(R_exog)
+        f_exog = float(wald_exog.fvalue.item()) if hasattr(wald_exog.fvalue, 'item') else float(wald_exog.fvalue)
+        p_exog = float(wald_exog.pvalue.item()) if hasattr(wald_exog.pvalue, 'item') else float(wald_exog.pvalue)
+        rechaza_exog = p_exog < 0.05 if p_exog is not None else None
+    else:
+        f_exog = p_exog = None
+        rechaza_exog = None
+
+    # 2. Test de no linealidad (V3.2.5): F ANIDADO entre la CF lineal en log-precio
+    #    (log_checkout_price + v_hat + controles) y la CF-RCS (2 g.l.).
+    #    NOTA: con la base cr(..., constraints='center'), rcs_1 por sí sola NO es lineal,
+    #    por lo que H0: rcs_2 = rcs_3 = 0 no es una hipótesis de linealidad; ese Wald se
+    #    conserva solo como referencia ('test_wald_rcs2_rcs3').
+    ss_lin = smf.ols(second_stage_formula().replace('rcs_1 + rcs_2 + rcs_3', 'log_checkout_price'),
+                     data=df_iv).fit()
+    f_nl = float(((ss_lin.ssr - ss_model.ssr) / 2) / (ss_model.ssr / ss_model.df_resid))
+    p_nl = float(_f_dist.sf(f_nl, 2, ss_model.df_resid))
+    R_nl = np.zeros((2, len(ss_model.params)))
+    for j, nm in enumerate(['rcs_2', 'rcs_3']):
+        if nm in param_names_ss:
+            R_nl[j, param_names_ss.index(nm)] = 1
+    f_w23 = float(np.squeeze(ss_model.wald_test(R_nl, scalar=True).statistic))
+
+    # Elasticidad puntual en precio medio
+    precio_medio = df_iv['checkout_price'].mean()
+    # Usar la design matrix del RCS canónico para derivadas
+    elasticidad_precio_medio = elasticidad_puntual_rcs_canonico(ss_model, design_info, knots, np.array([precio_medio]))[0]
+
+    # Elasticidad puntual en mediana empírica
+    precio_mediana = df_iv['checkout_price'].median()
+    elasticidad_precio_mediana = elasticidad_puntual_rcs_canonico(ss_model, design_info, knots, np.array([precio_mediana]))[0]
+
+    return {
+        'primera_etapa': fs_model,
+        'segunda_etapa': ss_model,
+        'test_exogeneidad': {'F': f_exog, 'p': p_exog, 'rechaza_H0_05': rechaza_exog},
+        'test_no_linealidad_condicional': {'F': f_nl, 'p': p_nl, 'rechaza_H0_05': p_nl < 0.05,
+                                           'tipo': 'F anidado CF lineal vs CF-RCS (2 g.l.)'},
+        'test_wald_rcs2_rcs3': {'F': f_w23, 'nota': 'no es test de linealidad con base cr centrada'},
+        'coef_lineal_equivalente_2sls': float(ss_lin.params['log_checkout_price']),
+        'nudos': knots,
+        'elasticidad_precio_medio': float(elasticidad_precio_medio),
+        'elasticidad_precio_mediana': float(elasticidad_precio_mediana),
+        'v_hat_coef': float(ss_model.params.get('v_hat', np.nan)),
+        'v_hat_ee': float(ss_model.bse.get('v_hat', np.nan)),
+        '_especificacion': 'canonica_3_bases_rcs',
+    }
+
+
+def elasticidad_puntual_rcs_canonico(modelo, design_info, knots: np.ndarray, precio_vals: np.ndarray) -> np.ndarray:
+    """Calcula elasticidad puntual para especificación RCS canónica (3 bases: rcs_1, rcs_2, rcs_3).
+
+    Args:
+        modelo: Modelo OLS ajustado con rcs_1, rcs_2, rcs_3 + intercepto + v_hat + controles
+        design_info: patsy DesignInfo de build_canonical_rcs_design()
+        knots: Nudos canónicos [P5, P35, P65, P95]
+        precio_vals: Array de precios donde evaluar la elasticidad
+
+    Returns:
+        Array de elasticidades puntuales
+    """
+    log_precios = np.log(precio_vals)
+    h = 1e-5
+    elasticidades = np.zeros(len(precio_vals))
+
+    # Coeficientes de los 3 términos RCS canónicos
+    spline_basis_cols = ['rcs_1', 'rcs_2', 'rcs_3']
+    coefs_spline = np.array([modelo.params[c] for c in spline_basis_cols])
+
+    for i, log_p in enumerate(log_precios):
+        # Evaluar base de splines en log_p y log_p + h usando design_info FIJO
+        x0 = build_design_matrices([design_info], {'log_checkout_price': np.array([log_p - h])}, return_type='dataframe')[0]
+        x1 = build_design_matrices([design_info], {'log_checkout_price': np.array([log_p + h])}, return_type='dataframe')[0]
+
+        x0 = np.asarray(x0).flatten()
+        x1 = np.asarray(x1).flatten()
+
+        # Derivada numérica de la base de splines (diferencia CENTRAL, error O(h^2); V3.2.5)
+        deriv_splines = (x1 - x0) / (2 * h)
+
+        # Elasticidad = suma(coef_i * d(spline_i)/d(log x))
+        elasticidades[i] = np.dot(coefs_spline, deriv_splines)
+
+    return elasticidades
 
 
 # ======================================================================
@@ -710,12 +900,12 @@ def sensibilidad_excluir_outliers_precio(df: pd.DataFrame, pct_bajo: float = 1, 
 
 
 def comparar_errores_estandar(df: pd.DataFrame) -> dict:
-    """Compara HC3 vs Cluster vs Multiway vs Bootstrap en el modelo OLS log-log con controles.
+    """Compara HC3 vs cluster por centro vs cluster por entidad centro-comida vs Bootstrap en el modelo OLS log-log con controles.
 
     Retorna la elasticidad y sus errores estándar bajo enfoques:
     1. HC3 (heterocedasticidad robusto) -- SOLO para referencia, NO usar como inferencia principal
     2. Cluster por center_id
-    3. Multiway cluster: center_id × meal_id
+    3. Cluster por entidad centro-comida: center_id × meal_id (no es clustering bidimensional por separado)
     4. Panel FE clusterizado (entidad = center_id-meal_id)
     5. Bootstrap simple (modelo base) -- no reproduce estructura de dependencia
     6. Wild cluster bootstrap (robustez)
@@ -744,7 +934,7 @@ def comparar_errores_estandar(df: pd.DataFrame) -> dict:
     ee_cluster = modelo_cluster.bse.get('log_checkout_price', np.nan)
     coef_cluster = modelo_cluster.params.get('log_checkout_price', np.nan)
 
-    # 3. Multiway cluster: center_id × meal_id (Cameron, Gelbach, Miller 2011)
+    # 3. Cluster por entidad centro-comida: center_id × meal_id (no es clustering bidimensional por separado) (Cameron, Gelbach, Miller 2011)
     # Usamos statsmodels con grupos de interacción
     df_multiway = df.copy()
     df_multiway['center_meal'] = df_multiway['center_id'].astype(str) + '_' + df_multiway['meal_id'].astype(str)
@@ -792,64 +982,13 @@ def comparar_errores_estandar(df: pd.DataFrame) -> dict:
     return {
         'ols_hc3': {'elasticidad': coef_hc3, 'ee': ee_hc3, 'nota': 'SOLO REFERENCIA - no corrige autocorrelación'},
         'ols_cluster_center': {'elasticidad': coef_cluster, 'ee': ee_cluster},
-        'ols_multiway_center_meal': {'elasticidad': coef_multiway, 'ee': ee_multiway, 'nota': 'Inferencia principal recomendada'},
+        'ols_multiway_center_meal': {'elasticidad': coef_multiway, 'ee': ee_multiway, 'nota': 'Agrupación por entidad centro-comida; clave histórica mantenida por compatibilidad'},
         'panel_fe_cluster_entidad': {'elasticidad': coef_panel, 'ee': ee_panel},
         'bootstrap_simple': {'elasticidad': coef_boot, 'ee': ee_boot, 'nota': 'No reproduce estructura panel'},
         'wild_cluster_bootstrap': wild_boot,
         'ratio_cluster_hc3': ratio_cluster_hc3,
         'ratio_multiway_hc3': ratio_multiway_hc3,
         'ratio_bootstrap_hc3': ee_boot / ee_hc3 if ee_hc3 else np.nan,
-    }
-
-
-def _wild_cluster_bootstrap(df: pd.DataFrame, n_iteraciones: int = 500, semilla: int = 42) -> dict:
-    """Wild cluster bootstrap para OLS con clustering por center_id.
-
-    Usa pesos Rademacher (±1) por cluster. Recomendado cuando número de clusters es pequeño
-    (aquí 77 centros). Cameron, Gelbach, Miller (2008) y Webb (2014).
-    """
-    rng = np.random.default_rng(semilla)
-    clusters = df['center_id'].unique()
-    n_clusters = len(clusters)
-
-    formula = (
-        'log_num_orders ~ log_checkout_price '
-        '+ emailer_for_promotion + homepage_featured + hubo_aumento '
-        '+ C(category) + C(center_type)'
-    )
-
-    # Modelo original
-    modelo_base = smf.ols(formula, data=df).fit()
-    coef_base = modelo_base.params.get('log_checkout_price', np.nan)
-    residuos = modelo_base.resid
-    X = modelo_base.model.exog
-
-    coefs_boot = np.empty(n_iteraciones)
-
-    for i in range(n_iteraciones):
-        # Pesos Rademacher por cluster
-        weights = rng.choice([-1, 1], size=n_clusters)
-        weight_map = dict(zip(clusters, weights))
-        w = df['center_id'].map(weight_map).to_numpy()
-
-        # Y* = X*beta + w * residuos
-        y_star = X @ modelo_base.params + w * residuos
-
-        # Re-estimar
-        try:
-            modelo_b = smf.ols(formula, data=df).fit()
-            coefs_boot[i] = modelo_b.params.get('log_checkout_price', np.nan)
-        except Exception:
-            coefs_boot[i] = np.nan
-
-    coefs_boot = coefs_boot[~np.isnan(coefs_boot)]
-    return {
-        'elasticidad_media': float(np.mean(coefs_boot)) if len(coefs_boot) > 0 else np.nan,
-        'elasticidad_std': float(np.std(coefs_boot)) if len(coefs_boot) > 0 else np.nan,
-        'ic_95_inferior': float(np.percentile(coefs_boot, 2.5)) if len(coefs_boot) > 0 else np.nan,
-        'ic_95_superior': float(np.percentile(coefs_boot, 97.5)) if len(coefs_boot) > 0 else np.nan,
-        'n_iteraciones_validas': len(coefs_boot),
-        'nota': 'Wild cluster bootstrap (Rademacher) por center_id'
     }
 
 
@@ -1173,63 +1312,85 @@ def placebo_precio_futuro(df: pd.DataFrame) -> dict:
 
 def placebo_block_permutation(df: pd.DataFrame, block_size: int = 4, n_iteraciones: int = 500, seed: int = 42) -> dict:
     """
-    Placebo por permutación de bloques temporales.
+    Placebo por permutación de bloques temporales (block permutation).
 
-    Permuta bloques de semanas consecutivas (ej. bloques de 4 semanas)
-    preservando dependencia local dentro del bloque. Más realista que
-    permutación iid de semanas.
+    Permuta bloques de semanas consecutivas del PRECIO (variable independiente)
+    preservando dependencia local dentro del bloque, mientras se mantiene
+    la DEMANDA (variable dependiente) y controles en su orden temporal original.
+    Esto rompe la alineación temporal precio-demanda a nivel de bloque,
+    preservando la estructura de autocorrelación local del precio.
+
+    H0: la estructura temporal por bloques no importa (coef. precio con bloques permutados = real)
+    H1: la estructura temporal por bloques importa
+
+    Especificación: OLS log-log con controles y dummies C(category) + C(center_type)
+    (MISMA especificación que el modelo principal y placebo_precio_futuro, SIN week FE).
     """
     rng = np.random.default_rng(seed)
 
     weeks = sorted(df['week'].unique())
     n_weeks = len(weeks)
     n_blocks = n_weeks // block_size
+    remainder_weeks = n_weeks % block_size
 
     if n_blocks < 2:
         return {'error': 'Pocas semanas para block permutation'}
 
-    # Preparar matriz
-    y = df['log_num_orders'].to_numpy(dtype=float)
-    price = df['log_checkout_price'].to_numpy(dtype=float)
-    controles = df[['emailer_for_promotion', 'homepage_featured', 'hubo_aumento']].to_numpy(dtype=float)
-    cat_dummies = pd.get_dummies(df['category'], drop_first=True).to_numpy(dtype=float)
-    center_dummies = pd.get_dummies(df['center_type'], drop_first=True).to_numpy(dtype=float)
-    X = np.column_stack([price, controles, cat_dummies, center_dummies])
-    YX = np.column_stack([y, X])
-
-    week_codes, _ = pd.factorize(df['week'])
+    # Preparar datos ordenados por semana
+    df_sorted = df.sort_values('week').reset_index(drop=True)
+    week_codes, _ = pd.factorize(df_sorted['week'])
     n_weeks_codes = week_codes.max() + 1
 
-    def elasticidad_con_semana_fe(week_codes_vec: np.ndarray) -> float:
-        sums = np.zeros((n_weeks_codes, YX.shape[1]))
-        np.add.at(sums, week_codes_vec, YX)
-        counts = np.bincount(week_codes_vec, minlength=n_weeks_codes).astype(float)
-        means = sums / counts[:, None]
-        YX_dm = YX - means[week_codes_vec]
-        coef, *_ = np.linalg.lstsq(YX_dm[:, 1:], YX_dm[:, 0], rcond=None)
-        return float(coef[0])
+    y = df_sorted['log_num_orders'].to_numpy(dtype=float)
+    price = df_sorted['log_checkout_price'].to_numpy(dtype=float)
+    controles = df_sorted[['emailer_for_promotion', 'homepage_featured', 'hubo_aumento']].to_numpy(dtype=float)
+    cat_dummies = pd.get_dummies(df_sorted['category'], drop_first=True).to_numpy(dtype=float)
+    center_dummies = pd.get_dummies(df_sorted['center_type'], drop_first=True).to_numpy(dtype=float)
 
-    elasticidad_real = elasticidad_con_semana_fe(week_codes)
+    def elasticidad_sin_week_fe(price_vec: np.ndarray, y_vec: np.ndarray,
+                                  controles_vec: np.ndarray,
+                                  cat_dummies_vec: np.ndarray,
+                                  center_dummies_vec: np.ndarray) -> float:
+        """Coeficiente de price con dummies category + center_type (NO week FE).
+        Misma especificación que modelo_log_log_controles y placebo_precio_futuro.
+        """
+        X = np.column_stack([price_vec, controles_vec, cat_dummies_vec, center_dummies_vec])
+        # Añadir intercepto
+        X = np.column_stack([np.ones(len(y_vec)), X])
+        coef, *_ = np.linalg.lstsq(X, y_vec, rcond=None)
+        return float(coef[1])  # índice 1 = price (0 = intercepto)
 
+    # Elasticidad real: con precio original
+    elasticidad_real = elasticidad_sin_week_fe(price, y, controles, cat_dummies, center_dummies)
+
+    # Distribución nula: permutar bloques de PRECIO solamente
+    # Mantener y, controles, dummies en orden original; solo permutar price
     elasticidades_placebo = np.empty(n_iteraciones, dtype=float)
+
+    # Construir slices por bloque (incluir semanas restantes en el último bloque)
+    block_slices = []
+    for b in range(n_blocks):
+        start_week = b * block_size
+        # Último bloque incluye las semanas restantes
+        end_week = min((b + 1) * block_size, n_weeks) if b < n_blocks - 1 else n_weeks
+        mask = (week_codes >= start_week) & (week_codes < end_week)
+        block_slices.append(mask)
+
     for i in range(n_iteraciones):
-        # Permutar bloques
+        # Permutar índices de bloques
         block_indices = list(range(n_blocks))
         rng.shuffle(block_indices)
 
-        # Reconstruir códigos de semana permutados por bloques
-        new_week_codes = week_codes.copy()
-        for b, new_b in enumerate(block_indices):
-            start = b * block_size
-            end = min((b + 1) * block_size, n_weeks)
-            new_start = new_b * block_size
-            new_end = min((new_b + 1) * block_size, n_weeks)
-            # Mapear semanas del bloque original al nuevo bloque
-            mask = (week_codes >= start) & (week_codes < end)
-            offset = new_start - start
-            new_week_codes[mask] = week_codes[mask] + offset
+        # Reconstruir price concatenando bloques en orden permutado
+        price_parts = []
+        for new_b in block_indices:
+            mask = block_slices[new_b]
+            price_parts.append(price[mask])
+        price_perm = np.concatenate(price_parts)
 
-        elasticidades_placebo[i] = elasticidad_con_semana_fe(new_week_codes)
+        elasticidades_placebo[i] = elasticidad_sin_week_fe(
+            price_perm, y, controles, cat_dummies, center_dummies
+        )
 
     elasticidades_placebo = elasticidades_placebo[~np.isnan(elasticidades_placebo)]
     p_valor = float(np.mean(elasticidades_placebo <= elasticidad_real))
@@ -1244,5 +1405,5 @@ def placebo_block_permutation(df: pd.DataFrame, block_size: int = 4, n_iteracion
         'block_size': block_size,
         'rechaza_H0_05': p_valor < 0.05,
         'tipo': 'block_permutation',
-        'nota': 'Placebo VÁLIDO - preserva dependencia local dentro de bloques de semanas'
+        'nota': 'Placebo VÁLIDO - permuta bloques de precio preservando dependencia local, rompe alineación precio-demanda temporal. Especificación: OLS log-log con C(category)+C(center_type) (sin week FE), igual que modelo principal.'
     }

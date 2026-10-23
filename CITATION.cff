@@ -1,70 +1,32 @@
 cff-version: 1.2.0
-message: "If you use this work, please cite it as below."
+message: "Si usas este trabajo, cítalo con los datos de abajo."
+type: software
+title: "Elasticidad Precio-Demanda en el Servicio de Delivery de Comidas: Evidencia desde Datos Transaccionales"
+version: "3.3.0"
+date-released: "2026-10-21"
 authors:
   - family-names: "Vilca Ramos"
     given-names: "Jharol André"
     orcid: "https://orcid.org/0009-0009-7897-3439"
-    affiliation: "Estudiante de Ingeniería Industrial y Ciencia de Datos"
-title: "Elasticidad Precio-Demanda en el Servicio de Delivery de Comidas: Evidencia desde Datos Transaccionales (v2)"
-version: "2.1.0"
-doi: "10.5281/zenodo.XXXXXXX"
-date-released: "2026-08-11"
-url: "https://github.com/usuario/demanda-delivery-v2"
-repository-code: "https://github.com/usuario/demanda-delivery-v2"
-license: "MIT"
+url: "https://github.com/s7ex-j/demanda-delivery-v2"
+repository-code: "https://github.com/s7ex-j/demanda-delivery-v2"
+license: MIT
 keywords:
   - "elasticidad precio-demanda"
   - "food delivery"
   - "econometría aplicada"
-  - "regresión log-log"
-  - "datos transaccionales"
-  - "panel data"
+  - "datos de panel"
   - "variables instrumentales"
-  - "2SLS"
-  - "efectos fijos"
-  - "reproducible research"
-  - "python"
-  - "sqlite"
-  - "business intelligence"
   - "restricted cubic splines"
-  - "quantile regression"
-  - "placebo test"
-abstract: |
-  Este estudio estima la elasticidad precio de la demanda en una plataforma de food delivery
-  utilizando datos transaccionales reales (456,548 observaciones) del conjunto de datos público
-  Food Demand Forecasting (Kaggle/Genpact). Se implementan cuatro estrategias de identificación
-  complementarias: (1) OLS log-log con controles (elasticidad = -0.7513, IC 95% HC3 [-0.762, -0.741]),
-  (2) Panel con efectos fijos de dos vías (entidad y tiempo, elasticidad = -1.5755, EE clusterizado = 0.0236),
-  (3) Variables instrumentales 2SLS tipo Hausman-Nevo (elasticidad = -0.9487, EE robusto = 0.0032),
-  y (4) Panel FE con interacción tiempo-variante (log_price × semana, elasticidad base = -1.5697,
-  rango semanal -1.85 a -1.25, Wald χ²(144)=3068.85, p≈0).
-  Validación completa de supuestos: Breusch-Pagan → HC3, VIF ≈ 1.0, Jarque-Bera, Durbin-Watson,
-  Wu-Hausman/Wooldridge p≈0 → endogeneidad confirmada, Hansen J χ²=320 p≈0 rechazado pero mitigado
-  por robustez justamente identificada = -0.9627. RCS splines (4 nudos) rechazan linealidad log-log
-  (F=10,279, p≈0), elasticidad variable +0.58 a -3.22 según nivel de precio.
-  Robustez Plan técnico v2.1: Quantile Regression (τ=0.1→0.9: -0.65 a -1.00), Precio×Promo (F=659.73),
-  RESET (F=119.57), IV Control Function (exog. F=1,581, no-lin. F=4,815),
-  Placebo temporal (p=1.0 → robustez temporal confirmada), Igualdad por categoría (F=519.6, p≈0, -0.27 a -2.44).
-  El resultado se contextualiza frente a 12 fuentes de literatura verificada en tres grupos.
-  Se incluye capa SQL + BI (SQLite + 6 CSVs para Power BI/Looker Studio) con traducción explícita
-  del hallazgo econométrico a lenguaje de negocio. Pipeline reproducible completo en 10 notebooks Jupyter.
-  Informe final: 39 páginas, LaTeX apa7.cls, compilación limpia (pdflatex → biber → pdflatex×2).
-repository-artifact: "https://doi.org/10.5281/zenodo.XXXXXXX"
-preferred-citation:
-  type: "article"
-  title: "Elasticidad Precio-Demanda en el Servicio de Delivery de Comidas: Evidencia desde Datos Transaccionales (v2)"
-  authors:
-    - family-names: "Vilca Ramos"
-      given-names: "Jharol André"
-      orcid: "https://orcid.org/0009-0009-7897-3439"
-  year: 2026
-  journal: "Zenodo"
-  doi: "10.5281/zenodo.XXXXXXX"
-  url: "https://doi.org/10.5281/zenodo.XXXXXXX"
-notes:
-  - "Versión 2.1: segunda iteración metodológica que reemplaza encuesta propia (v1) por datos transaccionales reales"
-  - "Dataset: Kaggle/Genpact Food Demand Forecasting (456,548 observaciones, 145 semanas, 77 centros, 51 comidas)"
-  - "Pipeline reproducible: 10 notebooks (exploración → limpieza → modelado OLS → panel FE → IV → validación ×3 → literatura → SQL/BI) + scripts Plan técnico 2.1/2.2/2.3"
-  - "Bibliografía verificada: 15 entradas en jaes.bib (12 literatura externa + 1 estudio propio + 2 datos/pipeline)"
-  - "Informe final en LaTeX usando clase apa7.cls (una columna), 39 páginas, 5.4 MB"
-  - "DOI provisional: reemplazar XXXXXXX con el DOI real de Zenodo al publicar"
+  - "regresión cuantil"
+  - "investigación reproducible"
+abstract: >-
+  Investigación independiente que estima la elasticidad precio de la demanda en una plataforma
+  de entrega de comidas con 456 548 observaciones semana-centro-comida del conjunto público
+  Food Demand Forecasting (Genpact/Kaggle). OLS log-log con controles: -0,759 (IC 95 % agrupado
+  por entidad [-0,843; -0,675]); panel con efectos fijos de dos vías: -1,5985; IV 2SLS
+  Hausman-Nevo con controles: -0,841 (IC agrupado por centro [-0,940; -0,743]), presentado como
+  análisis de sensibilidad. RESET y un contraste F anidado con splines rechazan la elasticidad
+  constante; la elasticidad varía con el nivel de precio, la categoría, la semana y el cuantil
+  de la demanda (-0,67 a -1,01). Incluye informe en LaTeX, código, notebooks y tests que
+  reproducen las cifras del informe.

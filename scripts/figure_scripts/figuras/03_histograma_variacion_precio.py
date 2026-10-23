@@ -1,0 +1,3 @@
+from common import *
+df=load_df(); x=df['variacion_precio_pct'].clip(df['variacion_precio_pct'].quantile(.005),df['variacion_precio_pct'].quantile(.995))
+fig,ax=plt.subplots(figsize=(9,4.4)); ax.hist(x,bins=60); ax.axvline(0,linestyle='--',linewidth=1); ax.set_xlabel('Variación porcentual base → checkout'); ax.set_ylabel('Frecuencia'); ax.set_title('Distribución de la variación porcentual de precio'); apply_grid(ax); fig.tight_layout(); save(fig,'histograma_variacion_precio_pct.png')

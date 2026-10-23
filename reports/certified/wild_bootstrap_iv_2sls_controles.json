@@ -1,0 +1,16 @@
+{
+ "version": "3.2.5",
+ "script": "scripts/vm/wild_bootstrap_iv_2sls_controles.py",
+ "especificacion": "log_num_orders ~ 1 + emailer + homepage + hubo_aumento + C(category) + C(center_type) + [log_checkout_price ~ log_base_price + log_precio_prom_otros_centros]",
+ "n_obs": 456544,
+ "clusters": 77,
+ "semilla": 42,
+ "coef_base": -0.841379235501222,
+ "coef_media": -0.84100430813266,
+ "coef_std": 0.0503622589903173,
+ "ic_95_inferior": -0.939755821158009,
+ "ic_95_superior": -0.742363559340771,
+ "n_iteraciones_validas": 2000,
+ "n_iteraciones_total": 2000,
+ "nota": "Wild cluster bootstrap (Rademacher, center_id), ambas etapas perturbadas y reestimadas; réplicas brutas en wild_bootstrap_iv_2sls_controles.npz. Sensibilidad; no corrige Hansen J."
+}

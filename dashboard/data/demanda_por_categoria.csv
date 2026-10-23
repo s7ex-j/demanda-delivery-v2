@@ -1,4 +1,4 @@
-category,n_ordenes,demanda_promedio,demanda_total,precio_promedio,precio_base_promedio
+category,n_obs,demanda_promedio,demanda_total,precio_promedio,precio_base_promedio
 Beverages,127890,316.52611619360385,40480525,213.26402353585112,226.85460919540228
 Rice Bowl,33408,624.8222880747127,20874063,317.53224018199234,339.3867780172414
 Sandwich,33291,529.7762758703553,17636782,289.9889985281307,305.2335850530173
