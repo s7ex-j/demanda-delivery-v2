@@ -12,7 +12,7 @@ certificados que cita el informe.
 
 **Autor:** Jharol André Vilca Ramos · [ORCID 0009-0009-7897-3439](https://orcid.org/0009-0009-7897-3439) · Versión 3.3.0
 
-**Informe:** [doi.org/10.5281/zenodo.23586040](https://doi.org/10.5281/zenodo.23586040) · **Código:** [doi.org/10.5281/zenodo.23585772](https://doi.org/10.5281/zenodo.23585772)
+**Informe:** [doi.org/10.5281/zenodo.23586040](https://doi.org/10.5281/zenodo.23586040) · **Código:** [doi.org/10.5281/zenodo.23585772](https://doi.org/10.5281/zenodo.23585772) · **ResearchGate:** [publicación](https://www.researchgate.net/publication/416623085_Elasticidad_Precio-Demanda_en_el_Servicio_de_Delivery_de_Comidas_Evidencia_desde_Datos_Transaccionales)
 
 ---
 
