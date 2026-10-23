@@ -3,6 +3,7 @@ message: "Si usas este trabajo, cítalo con los datos de abajo."
 type: software
 title: "Elasticidad Precio-Demanda en el Servicio de Delivery de Comidas: Evidencia desde Datos Transaccionales"
 version: "3.3.0"
+doi: "10.5281/zenodo.23585772"
 date-released: "2026-10-21"
 authors:
   - family-names: "Vilca Ramos"
@@ -30,3 +31,25 @@ abstract: >-
   constante; la elasticidad varía con el nivel de precio, la categoría, la semana y el cuantil
   de la demanda (-0,67 a -1,01). Incluye informe en LaTeX, código, notebooks y tests que
   reproducen las cifras del informe.
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23585772"
+    description: "Código: DOI concepto (todas las versiones)"
+  - type: doi
+    value: "10.5281/zenodo.23585773"
+    description: "Código: versión 3.3.0"
+  - type: doi
+    value: "10.5281/zenodo.23586040"
+    description: "Informe (working paper): DOI concepto"
+preferred-citation:
+  type: report
+  title: "Elasticidad precio-demanda en el servicio de delivery de comidas: evidencia desde datos transaccionales"
+  authors:
+    - family-names: "Vilca Ramos"
+      given-names: "Jharol André"
+      orcid: "https://orcid.org/0009-0009-7897-3439"
+  year: 2026
+  doi: "10.5281/zenodo.23586040"
+  url: "https://doi.org/10.5281/zenodo.23586040"
+  publisher:
+    name: "Zenodo"
