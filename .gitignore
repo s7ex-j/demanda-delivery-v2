@@ -1,0 +1,49 @@
+# Datos (no se redistribuyen; se descargan y regeneran con scripts/download_data.py)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/demanda_limpia.csv
+sql/*.db
+
+# Credenciales
+kaggle.json
+.kaggle/
+
+# Entornos y cachés de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Salidas intermedias de notebooks (se regeneran al ejecutarlos)
+reports/notebook_outputs/*
+!reports/notebook_outputs/.gitkeep
+reports/comparacion_modelos.csv
+reports/resultados_fase_3c.json
+
+# Checkpoints de bootstrap largos
+*.checkpoint.pkl
+*.checkpoint.npy
+*.tmp
+
+# LaTeX: auxiliares (el .tex, .bib, figuras y el PDF sí se versionan)
+Informe/*.aux
+Informe/*.bcf
+Informe/*.blg
+Informe/*.log
+Informe/*.out
+Informe/*.run.xml
+Informe/*.toc
+Informe/*.fdb_latexmk
+Informe/*.fls
+Informe/*.synctex.gz
+
+# Sistema / IDE
+.DS_Store
+.vscode/
+.idea/
+.claude/
