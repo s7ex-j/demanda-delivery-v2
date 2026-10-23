@@ -2,6 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/1430542939.svg)](https://doi.org/10.5281/zenodo.23585772)
 
 Investigación independiente que estima la elasticidad precio de la demanda en una plataforma de
 entrega de comidas con **456 548 observaciones semana × centro × comida** del conjunto público
@@ -10,6 +11,8 @@ LaTeX (`Informe/informe.pdf`, 49 páginas), el código, los notebooks y todos lo
 certificados que cita el informe.
 
 **Autor:** Jharol André Vilca Ramos · [ORCID 0009-0009-7897-3439](https://orcid.org/0009-0009-7897-3439) · Versión 3.3.0
+
+**Informe:** [doi.org/10.5281/zenodo.23586040](https://doi.org/10.5281/zenodo.23586040) · **Código:** [doi.org/10.5281/zenodo.23585772](https://doi.org/10.5281/zenodo.23585772)
 
 ---
 
@@ -120,12 +123,14 @@ contra el original. Cada resultado del informe se reproduce desde el código de 
 Ver [`CITATION.cff`](CITATION.cff).
 
 ```bibtex
-@misc{vilcaramos2026elasticidad,
-  author = {Vilca Ramos, Jharol André},
-  title  = {Elasticidad precio-demanda en el servicio de delivery de comidas: evidencia desde datos transaccionales},
-  year   = {2026},
-  note   = {Versión 3.3.0},
-  url    = {https://github.com/s7ex-j/demanda-delivery-v2}
+@techreport{vilcaramos2026elasticidad,
+  author      = {Vilca Ramos, Jharol André},
+  title       = {Elasticidad precio-demanda en el servicio de delivery de comidas: evidencia desde datos transaccionales},
+  institution = {Zenodo},
+  type        = {Working paper},
+  year        = {2026},
+  doi         = {10.5281/zenodo.23586040},
+  url         = {https://doi.org/10.5281/zenodo.23586040}
 }
 ```
 
