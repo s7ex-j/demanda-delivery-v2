@@ -1,0 +1,3 @@
+from common import *
+df=load_df(); g=df.groupby(['emailer_for_promotion','homepage_featured'])['num_orders'].mean().reset_index(); labels=[f"Email {int(a)}, Home {int(b)}" for a,b in g[['emailer_for_promotion','homepage_featured']].values]
+fig,ax=plt.subplots(figsize=(9,3.7)); ax.bar(labels,g.num_orders); ax.set_ylabel('Demanda promedio'); ax.set_title('Demanda promedio por combinación de promociones'); apply_grid(ax); fig.tight_layout(); save(fig,'efecto_promociones_matriz.png')

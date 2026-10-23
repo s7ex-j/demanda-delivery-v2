@@ -1,0 +1,72 @@
+{
+  "provenance": {
+    "generator_script": "scripts/vm/generate_cf_elasticidad_curve_canonical.py",
+    "model_specification": "CF canónica (3 bases RCS: rcs_1, rcs_2, rcs_3 + intercepto explícito + v_hat)",
+    "bootstrap_source": "reports/certified/bootstrap_vhat_canonical.json (5000 iter, seed=42, 77 clusters center_id)",
+    "coeficientes_usados": "Bootstrap MEDIAS (v_hat=0.9937, rcs_1=-0.0376, rcs_2=-0.4037, rcs_3=-1.1969)",
+    "dataset": "data/processed/demanda_limpia.csv",
+    "dataset_sha256": "90d41670226e961b3eb3ceb6b5b312575082280198a6898b3b1f1bccf5a4707e",
+    "seed": 42,
+    "n_clusters": 77,
+    "n_bootstrap_iter": 5000
+  },
+  "specifications": {
+    "rcs_bases": 3,
+    "rcs_names": [
+      "rcs_1",
+      "rcs_2",
+      "rcs_3"
+    ],
+    "knots_percentiles": [
+      5,
+      35,
+      65,
+      95
+    ],
+    "knots_log_price": [
+      4.7981019218940615,
+      5.560758551134023,
+      5.855816630511699,
+      6.4618274867939896
+    ],
+    "knots_price": [
+      121.28,
+      260.02000000000004,
+      349.2599999999999,
+      640.2300000000002
+    ],
+    "constraints": "center",
+    "intercept_explicit": true,
+    "design_info_fixed": true,
+    "v_hat_extraction": "by_name"
+  },
+  "grid": {
+    "price_min": 50.0,
+    "price_max": 800.0,
+    "n_points": 200,
+    "price_medio_real": 332.2389325547368,
+    "price_grid_p50": 332.6633165829146
+  },
+  "results": {
+    "elasticidad_p50": -1.5031163510829177,
+    "elasticidad_range": [
+      -1.5332734506952328,
+      -0.13658328505705708
+    ],
+    "coeficientes_bootstrap_medias": {
+      "rcs_1": -0.03759265606243253,
+      "rcs_2": -0.4036744642785278,
+      "rcs_3": -1.196884251462822
+    },
+    "v_hat_bootstrap_media": 0.9937256404127849,
+    "f_exog_bootstrap_media": 3197.508854050283,
+    "f_nonlin_bootstrap_media": 17253.15518993532,
+    "r2_adj_puntual": 0.5411881995497059
+  },
+  "validation": {
+    "matches_existing_npy": true,
+    "numerical_precision": "float64",
+    "byte_for_byte_match_expected": false,
+    "max_abs_diff_vs_existing": 2.1e-05
+  }
+}

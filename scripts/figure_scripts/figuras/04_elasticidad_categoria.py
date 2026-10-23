@@ -1,0 +1,3 @@
+from common import *
+df=load_df(); g=df.groupby('category').apply(lambda x: x['log_num_orders'].cov(x['log_checkout_price'])/x['log_checkout_price'].var()).sort_values()
+fig,ax=plt.subplots(figsize=(8,5.2)); g.plot.barh(ax=ax); ax.axvline(-.759,linestyle='--',linewidth=1.4); ax.set_xlabel('Elasticidad proxy (correlación log-log)'); ax.set_ylabel('Categoría'); ax.set_title('Elasticidad-precio proxy por categoría'); apply_grid(ax); fig.tight_layout(); save(fig,'elasticidad_por_categoria.png')

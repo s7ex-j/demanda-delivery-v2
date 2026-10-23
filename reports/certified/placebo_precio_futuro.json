@@ -1,0 +1,6 @@
+{
+  "elasticidad_precio_futuro_lead": -0.6172491736452957,
+  "elasticidad_precio_contemporaneo": -0.7595679817328382,
+  "n_obs": 452951,
+  "nota": "Placebo VÁLIDO - precio futuro no debe explicar demanda presente. Si coef_lead ≈ coef_contemp, hay confusión temporal."
+}

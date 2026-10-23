@@ -1,0 +1,16 @@
+{
+  "coef_media": -0.9607054374504495,
+  "coef_std": 0.028112906761497327,
+  "ic_95_inferior": -1.0141449555866566,
+  "ic_95_superior": -0.9042970475671793,
+  "n_iteraciones_validas": 2000,
+  "n_iteraciones_total": 2000,
+  "convergencia_tasa": 1.0,
+  "coef_base": -0.9604407533795293,
+  "f_first_stage_base": 4569124.00476782,
+  "f_first_stage_media_bootstrap": 4574836.279042074,
+  "f_first_stage_std_bootstrap": 31006.949743627923,
+  "clusters": 77,
+  "semilla": 42,
+  "nota": "Wild cluster bootstrap IV con ambas etapas reestimadas; sensibilidad, no identificaciÃ³n causal."
+}

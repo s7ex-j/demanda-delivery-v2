@@ -1,0 +1,45 @@
+{
+ "especificacion": "log_num_orders ~ 1 + emailer_for_promotion + homepage_featured + hubo_aumento + C(category) + C(center_type) + [log_checkout_price ~ log_base_price + log_precio_prom_otros_centros]",
+ "n_total": 456544,
+ "j_muestra_completa": 33.28006351814253,
+ "p_muestra_completa": 7.979652762856991e-09,
+ "n_repeticiones": 50,
+ "seed": 42,
+ "resultados_por_n": {
+  "2000": {
+   "j_media": 1.1867381851980634,
+   "tasa_rechazo_5pct": 0.1,
+   "n_validas": 50
+  },
+  "5000": {
+   "j_media": 1.5197672951967829,
+   "tasa_rechazo_5pct": 0.12,
+   "n_validas": 50
+  },
+  "10000": {
+   "j_media": 1.8341410609098778,
+   "tasa_rechazo_5pct": 0.08,
+   "n_validas": 50
+  },
+  "20000": {
+   "j_media": 1.8436161920792051,
+   "tasa_rechazo_5pct": 0.14,
+   "n_validas": 50
+  },
+  "50000": {
+   "j_media": 4.084925557162702,
+   "tasa_rechazo_5pct": 0.42,
+   "n_validas": 50
+  },
+  "100000": {
+   "j_media": 8.527932118086362,
+   "tasa_rechazo_5pct": 0.84,
+   "n_validas": 50
+  },
+  "200000": {
+   "j_media": 15.116018249113898,
+   "tasa_rechazo_5pct": 1.0,
+   "n_validas": 50
+  }
+ }
+}

@@ -98,16 +98,16 @@ class TestAplicarTransformacionLog:
         assert 'log_checkout_price' in df.columns
         assert 'log_num_orders' in df.columns
         assert np.isclose(df['log_checkout_price'].iloc[0], np.log(100.0))
-        assert np.isclose(df['log_num_orders'].iloc[0], np.log1p(10))
+        assert np.isclose(df['log_num_orders'].iloc[0], np.log(10))
 
-    def test_log_num_orders_usa_log1p(self):
-        """log_num_orders debe usar log1p (log(1+x)) para manejar ceros."""
+    def test_log_num_orders_usa_log(self):
+        """log_num_orders debe usar log (no log1p) porque min(num_orders) >= 13."""
         df = pd.DataFrame({
             'checkout_price': [100.0],
-            'num_orders': [0],
+            'num_orders': [10],
         })
         df = aplicar_transformacion_log(df)
-        assert df['log_num_orders'].iloc[0] == 0.0  # log1p(0) = 0
+        assert np.isclose(df['log_num_orders'].iloc[0], np.log(10))
 
 
 class TestPipelineCompleto:

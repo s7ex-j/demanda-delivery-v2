@@ -1,0 +1,14 @@
+{
+  "n_iteraciones_validas": 2000,
+  "n_iteraciones_total": 2000,
+  "clusters": 77,
+  "seed": 42,
+  "coef_media": -0.9606121449614277,
+  "coef_std": 0.02676373500712751,
+  "ic_95_inferior": -1.0117266794654676,
+  "ic_95_superior": -0.9079137565664755,
+  "convergencia_tasa": 1.0,
+  "coef_base": -0.9604407533795293,
+  "f_first_stage_base": 4569124.00476782,
+  "nota": "Wild cluster bootstrap IV con primera etapa fija; analisis de sensibilidad, no corrige Hansen J. 2000/2000 validas, seed=42, clusters=77."
+}

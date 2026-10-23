@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "n_iteraciones_total": 5000,
+  "n_iteraciones_validas": 5000,
+  "n_descartadas": 0,
+  "seed": 42,
+  "cluster_variable": "center_id",
+  "n_clusters": 77,
+  "nudos_percentiles": [
+    5,
+    35,
+    65,
+    95
+  ],
+  "nudos_log_precio": [
+    4.7981019218940615,
+    5.560758551134023,
+    5.855816630511699,
+    6.4618274867939896
+  ],
+  "nudos_precio": [
+    121.28,
+    260.02000000000004,
+    349.2599999999999,
+    640.2300000000002
+  ],
+  "v_hat": {
+    "media": 0.9937256404127849,
+    "std": 0.16542298097381686,
+    "ic95_inf": 0.6641912842665694,
+    "ic95_sup": 1.3135239688437828,
+    "n": 5000
+  },
+  "rcs_1": {
+    "media": -0.03759265606243253,
+    "std": 0.02013052507742633,
+    "ic95_inf": -0.07688257081369448,
+    "ic95_sup": 0.002886877371485803,
+    "n": 5000
+  },
+  "rcs_2": {
+    "media": -0.4036744642785278,
+    "std": 0.026043074023172144,
+    "ic95_inf": -0.454400897248939,
+    "ic95_sup": -0.3507411726361393,
+    "n": 5000
+  },
+  "rcs_3": {
+    "media": -1.196884251462822,
+    "std": 0.04465824320323304,
+    "ic95_inf": -1.2794540389213436,
+    "ic95_sup": -1.1055814886450501,
+    "n": 5000
+  },
+  "test_exogeneidad": {
+    "media": 3197.508854050283,
+    "std": 1006.6937001535659,
+    "ic95_inf": 1426.9539120889758,
+    "ic95_sup": 5314.135023096915,
+    "n": 5000
+  },
+  "test_no_linealidad_condicional": {
+    "media": 17253.15518993532,
+    "std": 1795.5649200143846,
+    "ic95_inf": 13792.946940053114,
+    "ic95_sup": 20805.30261004522,
+    "n": 5000
+  },
+  "nota": "Bootstrap clusterizado canÃ³nico por center_id (77 clusters). RCS con nudos explÃ­citos P5/P35/P65/P95, 3 bases (rcs_1 lineal, rcs_2/3 no lineales). Ambas etapas reestimadas en cada rÃ©plica. IC percentil bootstrap."
+}

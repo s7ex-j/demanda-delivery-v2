@@ -1,0 +1,20 @@
+metrica,valor
+Total ordenes,119557485.0
+Precio promedio,332.24
+Elasticidad OLS log-log (asociacion promedio),-0.759
+Elasticidad Panel FE (benchmark global),-1.5985
+"Elasticidad IV 2SLS con controles (sensibilidad; EE agrupado 0.0502)",-0.8414
+Elasticidad RCS min (P5-P95),-1.512489556103264
+Elasticidad RCS max (P5-P95),0.037704065107287396
+Wild cluster bootstrap media,-0.7584608790323888
+Wild cluster bootstrap IC inf,-0.8379799784707392
+Wild cluster bootstrap IC sup,-0.6729689933052054
+EE agrupado por entidad (inferencia principal),0.043
+Ratio cluster/HC3,8.11320754716981
+N observaciones,456548.0
+N centros unicos,77.0
+N comidas unicas,51.0
+Semanas cubiertas,145.0
+Quantile tau=0.1 (demanda baja),-0.6685
+Quantile tau=0.5 (mediana),-0.7748
+Quantile tau=0.9 (demanda alta),-1.0068

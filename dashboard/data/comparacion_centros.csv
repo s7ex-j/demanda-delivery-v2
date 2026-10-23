@@ -1,4 +1,4 @@
-center_type,n_ordenes,demanda_promedio,demanda_total,precio_promedio,n_centros
+center_type,n_obs,demanda_promedio,demanda_total,precio_promedio,n_centros
 TYPE_A,262881,262.3944560466523,68978517,332.7968899996576,43
 TYPE_B,94074,318.856145162319,29996073,338.7654382719986,15
 TYPE_C,99593,206.6700972959947,20582895,324.6013384474812,19
