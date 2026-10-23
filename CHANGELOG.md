@@ -22,6 +22,10 @@ Auditoría completa previa a la publicación. Toda cifra del informe se recalcul
   este estudio corregidas en la tabla comparativa y la Figura 9; se retiró una cifra de
   Christensen (2023) que no figura en la fuente.
 
+### Contenido
+- Se retira la subsección "Relación con trabajo previo": el estudio anterior del autor usó otros
+  datos y otro método, y no es un antecedente de este trabajo.
+
 ### Maquetación del informe
 - Tablas y figuras pasan de posición fija `[H]` a ubicación flotante dentro de su sección: ya no
   quedan páginas medio vacías (55 → 49 páginas, mismo contenido).
@@ -59,5 +63,4 @@ Corrige los hallazgos de la auditoría externa de 3.2.4.
 ## Versiones anteriores (3.0 – 3.2.4)
 
 Desarrollo de las especificaciones de panel, IV, RCS, regresión cuantil, función de control y
-placebos, más varias rondas de corrección de coherencia entre informe y código. La v1 del
-estudio (encuesta propia) es un trabajo distinto y sus datos no se reutilizan.
+placebos, más varias rondas de corrección de coherencia entre informe y código.
