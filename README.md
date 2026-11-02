@@ -1,5 +1,6 @@
 # Elasticidad precio-demanda en delivery de comidas
 
+[![tests](https://github.com/s7ex-j/demanda-delivery-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/s7ex-j/demanda-delivery-v2/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/1430542939.svg)](https://doi.org/10.5281/zenodo.23585772)
@@ -50,6 +51,9 @@ pip install -r requirements.txt
 python scripts/download_data.py      # descarga de Kaggle, verifica SHA-256 y genera data/processed/
 pytest -q                            # 53 tests: reproducen las cifras del informe
 ```
+
+Sin los datos, `pytest` ejecuta los tests de código y de artefactos certificados y omite los que
+recalculan cifras del informe; así corre también GitHub Actions en cada push.
 
 Los datos **no se incluyen** en el repositorio: pertenecen a la competencia original y se
 descargan con la API de Kaggle (credenciales en `~/.kaggle/kaggle.json`) o manualmente en
