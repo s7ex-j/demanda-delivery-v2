@@ -5,6 +5,8 @@
 [![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-green.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/1430542939.svg)](https://doi.org/10.5281/zenodo.23585772)
 
+<sub>**Español** · [English](README.en.md)</sub>
+
 Investigación independiente que estima la elasticidad precio de la demanda en una plataforma de
 entrega de comidas con **456 548 observaciones semana × centro × comida** del conjunto público
 *Food Demand Forecasting* (Genpact / Analytics Vidhya, en Kaggle). Incluye el informe completo en
